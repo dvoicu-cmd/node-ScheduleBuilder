@@ -10,14 +10,15 @@ A simple custom-made web app that automates student shifts for IT technicians at
 
 ## **Functional Requirements**
 - *General*
-    - Languages: HTML5, CSS, JavaScript
+    - Languages: TBD
 
 - *Backend*
-    - Sample 
-    -  
+    -  TBD
+
 - *Frontend*
-    - Sample
-    -
+    - Spread sheet calandar
+    - Recive input of students and student availability
+    - TBD: if web app or java executable
 
 ## **Example of Functionality**
 If the user is putting in student names and then their availability for every day this week (ie: Dan, Mon 9:00-12:00, 14:30-16:00, Tues 8:30-11:30, 16:00-18:00,...)
