@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="default.css">
 </head>
 <body>
-    <div>
-        <h1>Sample Text</h1>
+    <!-- 
+        Specifiying the 3 containers that are being used:
+        Students -> the container for modifying/displaying student objects
+        Shifts -> the container for modifying/displaying shift objects
+    -->
+    <div class="ObjContainer" id="Students">
+        <h2>List of Students:</h2>
+        <button>Add Student</button>
     </div>
-    <div>
-        <h2>Sample Text 2</h2>
+    <div class="ObjContainer" id="Shifts">
+        <h2>List of Shifts:</h2>
+        <button>Add Shift</button>
+    </div>
+    <div class="ObjContainer" id="Calendar">
+        <h2>Possible Shifts:</h2>
     </div>
 </body>
 <script src="main.js"></script>
