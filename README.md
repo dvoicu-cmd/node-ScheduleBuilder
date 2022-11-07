@@ -8,17 +8,21 @@ A simple custom-made web app that automates student shifts for IT technicians at
 - Manually assignment of shifts.
 - A on or off toggle to enable/disable student preferences
 
-## **Functional Requirements**
+## **Functional Requirements Check List**
 - *General*
-    - Languages: TBD
+    - Languages: 
+        - Front end: HTML CSS 
+        - Back end: JS
+    - Web application
 
-- *Backend*
-    -  TBD
-
-- *Frontend*
-    - Spread sheet calandar
-    - Recive input of students and student availability
-    - TBD: if web app or java executable
+- *functional checklist*
+    - [ ] Basic spread sheet calandar functionality 
+    - [ ] Recive and store input of student objects.
+    - [ ] Recive and store input of possible shift schedule objects
+    - [ ] Develope/Find algorithm to find all possible shift object for given student objects **(Priority!)**
+    - TBD tasks:
+        - [ ] Display inputed student objects
+        - [ ] Display inputed shift objects
 
 ## **Example of Functionality**
 If the user is putting in student names and then their availability for every day this week (ie: Dan, Mon 9:00-12:00, 14:30-16:00, Tues 8:30-11:30, 16:00-18:00,...)
