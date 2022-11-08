@@ -1,4 +1,10 @@
 /**
  * 
  */
-import { Student } from './student';
+function addStudent(){
+    
+}
+
+function schedule(){
+    new Schedule();
+}
