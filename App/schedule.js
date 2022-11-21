@@ -4,7 +4,6 @@
  * Time is organized into 30 min chunks.
  */
 class Schedule {
-    _selectedTime = [];
 
     constructor(){
         this._selectedTime = generateHours();
@@ -28,18 +27,17 @@ class Schedule {
             let prt2 = this._selectedTime.splice(endIndex, this._selectedTime.length-1);
             this._selectedTime = prt1.concat(prt2);
         }
-
     }
 
     reset(){
         this._selectedTime = generateHours();
     }
 
-    /**
-     * Generates and returns the array [8.5, 9.0, 9.5, ... , 21.0].
-     */
 }
 
+/**     
+ * Generates and returns the array [8.5, 9.0, 9.5, ... , 21.0].
+ */
 function generateHours(){
     let i = 0;
     let chunk = 8.5;
