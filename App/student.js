@@ -1,10 +1,17 @@
 /**
  * This javascript file exports a student object to the the ./main.js script
+ * Properties:
+ *  - @param maxHour is a positive integer depicting the maximum number of hours a student can take on for a work week
+ *  - @param _name is a String that contains the name of the student
+ *  - @param _hours is an integer depicting the number of hours a student is working
+ *  - @param _assignedShifts is a list of Shift objects pointing to the shifts the student has assigned
+ *  - @param _avalability is a Schedule object that depicts the time the student is available
+ *  - @param _preference is a Schedule object that depicts when a student prefers to work
  */
 
 class Student {
 
-    static hourCap = 15;
+    static maxHour = 15;
 
     /*
      * The following are object constructors

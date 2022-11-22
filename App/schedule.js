@@ -1,7 +1,8 @@
 
 /**
- * The schedule class is used in managing time frames of a day.
- * Time is organized into 30 min chunks.
+ * The schedule class is used in managing time frames of a day, where time is organized into 30 min chunks.
+ * Properties:
+ * - @param _selectedTime is an array of doubles initially containing the set: {8.5, 9, 9.5,...,20, 20.5, 21}. This list is the representation of 30 min chunks of a given work day.
  */
 class Schedule {
 
