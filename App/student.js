@@ -46,7 +46,7 @@ class Student {
      * The following are getter methods
      */
     get name(){
-        return this.name;
+        return this._name;
     }
     get hours(){
         return this._hours;
