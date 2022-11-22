@@ -59,9 +59,10 @@ class Schedule {
     
     subSection(from,till){
         let startIndex = this._selectedTime.indexOf(from);
-        let endIndex = this._selectedTime.indexOf(till)-1;
+        let endIndex = this._selectedTime.indexOf(till);
         if(startIndex < endIndex){
-            
+            this._selectedTime.splice(0, startIndex);
+            this._selectedTime.splice(endIndex-startIndex+1, this._selectedTime.length-1);
         }
     }
 
