@@ -34,16 +34,14 @@ class ArrayList {
         return this.ArrayList.indexOf(element);
     }
 
-
-    //Need to fix BUG here
-    randomize(){ //Thanks BroCode
-        let currentIndex = 0;
-        while(currentIndex <= this.ArrayList.length){
+    randomize(){ //Thanks BroCode on YT
+        let currentIndex = this.ArrayList.length-1;
+        while(currentIndex >= 0){
             let randomIndex = Math.floor(Math.random()*this.ArrayList.length);
             let temp = this.ArrayList[currentIndex];
             this.ArrayList[currentIndex] = this.ArrayList[randomIndex];
             this.ArrayList[randomIndex] = temp;            
-            currentIndex++;
+            currentIndex--;
         }
     }
 
