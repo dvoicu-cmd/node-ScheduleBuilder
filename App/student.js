@@ -65,10 +65,18 @@ class Student {
         return this._preference;
     }
 
-    //WIP
-    assignShift(){}
+    //WIP not even sure if these are needed.
+    assignShift(shift){
+        this._assignedStudents.push(student);
+    }
 
-    unassignShift(){}
+    unassignShift(shift){
+        indexOf = this._assignedStudents.indexOf(shift);
+        prt1 = this._assignedStudents.splice(0,indexOf);
+        prt2 = this._assignedStudents;
+        prt1.pop();
+        this._assignedStudents = prt1.concat(prt2);
+    }
 
     /**
      * A method to reduce the time when a student is available 

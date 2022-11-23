@@ -1,17 +1,26 @@
+
 /**
- * 
+ * Initalizes the list of shifts
  */
-function addStudent(){
-    
+function initShiftList(){
+
 }
 
-function schedule(){
-    const scheduleD = new Schedule();
-    console.log(scheduleD);
-    const schedule1 = new Schedule();
-    schedule1.trim(9.0,12.0);
-    console.log(schedule1);
-    const schedule2 = new Schedule();
-    schedule2.subSection(10.0,12.0);
-    console.log(schedule2);
+function randomizeList(){
+
+}
+
+function test(){
+    const arrayL = new ArrayList();
+    const std1 = new Student('Dan');
+    const std2 = new Student('Ali');
+    const std3 = new Student('Sara');
+    const std4 = new Student('Billy');
+    arrayL.add(std1);
+    arrayL.add(std2);
+    arrayL.add(std3);
+    arrayL.add(std4);
+    console.log(arrayL.ArrayList);
+    arrayL.randomize();
+    console.log(arrayL.ArrayList);
 }

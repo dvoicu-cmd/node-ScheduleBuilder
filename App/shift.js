@@ -27,4 +27,24 @@ class Shift{
         this._shiftTime.subSection(from,to);
     }
 
+    //Shifts will modify students
+    selectStudent(student){
+        if(this._assignedStudents.length > 0){
+            this._hasStudent = true;
+        }
+        this._assignedStudents.push(student);
+        student.assignShift(this);
+    }
+
+    removeStudent(student){
+
+        indexOf = this._assignedStudents.indexOf(student);
+        prt1 = this._assignedStudents.splice(0,indexOf);
+        prt2 = this._assignedStudents;
+        prt1.pop();
+        this._assignedStudents = prt1.concat(prt2);
+        student.unassignShift(this);
+
+    }
+
 }
