@@ -1,12 +1,48 @@
 
 /**
- * Initalizes the list of shifts
+ * Initializes a new arrayList()
+ * @returns 
  */
-function initShiftList(){
+function initList(){
+    const List = new ArrayList();
+    return List;
+}
+/**
+ * Pass in a list with an element, returns the list with the element added
+ * Please don't mix students and shift lists
+ * @param {*} List
+ * @param {*} Element 
+ * @returns List
+ */
+function addElement(List,Element){
+    List.add(Element);
+    return List;
+}
+
+/**
+ * Pass in a list with an index and an element, then returns the list with the element added at the specified index
+ * @param {*} List 
+ * @param {*} index 
+ * @param {*} Element 
+ */
+function addElementAt(List,index,Element){
+    List.addAt(Element,index,Element);
+    return List;
+}
+
+
+function randomAssign(Shifts,Students){
 
 }
 
-function randomizeList(){
+/**
+ * Pass in the list, returns the list randomized
+ * @param {*} List 
+ * @returns 
+ */
+function randomizeList(List){
+    List.randomize();
+    return List;
 }
 
 function test(){
