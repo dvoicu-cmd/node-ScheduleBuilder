@@ -7,7 +7,6 @@ function initShiftList(){
 }
 
 function randomizeList(){
-
 }
 
 function test(){
