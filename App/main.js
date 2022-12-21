@@ -1,3 +1,7 @@
+/**
+ * The main.js file contains contents that will be displayed to the end user. It brings together all the classes into one file that manages them all.
+ */
+
 
 /**
  * Initializes a new arrayList()

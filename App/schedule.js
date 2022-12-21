@@ -1,4 +1,3 @@
-
 /**
  * The schedule class is used in managing time frames of a day, where time is organized into 30 min chunks.
  * Properties:
@@ -6,19 +5,25 @@
  */
 class Schedule {
 
+    /**
+     * Consructor method for the class.
+     */
     constructor(){
         this._selectedTime = generateHours();
     }
 
+    /**
+     * Getter method for the class.
+     */
     get selectedTime(){
         return this._selectedTime;
     }
 
     /**
-     * Cuts a subset of 30 min chunks from the current list
-     * Precondition: 1) Numbers from 8.5, 9.0, 9.5, ..., 21.0. 2) when the method is repeatedly called, there is no overlap in past calls.
-     * @param {*A Number that selects the element to start at} from 
-     * @param {*A Number that selects the element to end at} till 
+     * Removes a subset of 30 min chunks from the current list.
+     * Precondition: 1) Numbers from 8.5, 9.0, 9.5, ..., 21.0. are inputted. 2) when the method is repeatedly called, there is no overlap in past calls.
+     * @param {*} from The starting boundry.
+     * @param {*} till The ending boundry.
      */
     trim(from, till){
         let startIndex = this._selectedTime.indexOf(from);
@@ -58,6 +63,12 @@ class Schedule {
         }
     }
     
+    /**
+     * Selects a subset of 30 min chunks from the current list and removes all other elements outside the specified bounds.
+     * Precondition: 1) Numbers from 8.5, 9.0, 9.5, ..., 21.0. are inputted. 2) when the method is repeatedly called, there is no overlap in past calls.
+     * @param {*} from The starting boundry.
+     * @param {*} till The ending boundry.
+     */
     subSection(from,till){
         let startIndex = this._selectedTime.indexOf(from);
         let endIndex = this._selectedTime.indexOf(till);
@@ -67,6 +78,9 @@ class Schedule {
         }
     }
 
+    /**
+     * Resets the selectedTime property to it's default.
+     */
     reset(){
         this._selectedTime = generateHours();
     }
