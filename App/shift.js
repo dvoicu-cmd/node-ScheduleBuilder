@@ -18,8 +18,17 @@ class Shift{
     constructor(type){
         this._type = type;
         this._shiftTime = new Schedule();
+        this._shiftDate = "Mon";
         this._assignedStudents = [];
         this._hasStudent = false;
+    }
+
+    get shiftTime(){
+        return _shiftTime;
+    }
+
+    get shiftDate(){
+        return _shiftDate;
     }
 
     /**
@@ -29,6 +38,14 @@ class Shift{
      */
     setTime(from,to){
         this._shiftTime.subSection(from,to);
+    }
+
+    /**
+     * Sets the date in which the shift takes place
+     * Preconditions: Must be a string of the following values: "Mon", "Tue", "Wed", "Thu", "Fri"
+     */
+    setDate(date){
+        this._shiftDate = date;
     }
 
     /**

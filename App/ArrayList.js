@@ -56,6 +56,23 @@ class ArrayList {
     }
 
     /**
+     * Gets the element at a specified index.
+     * @param {*} index 
+     * @returns 
+     */
+    get(index){
+        return this.ArrayList.at(index);
+    }
+
+    /**
+     * a method to return the length of the arrayList
+     * @returns The length of the arrayList
+     */
+     length(){
+        return this.ArrayList.length;
+    }
+
+    /**
      * Randomizes the arrayList's contents.
      */
     randomize(){ //Thanks BroCode on YT
