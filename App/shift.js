@@ -24,11 +24,11 @@ class Shift{
     }
 
     get shiftTime(){
-        return _shiftTime;
+        return this._shiftTime;
     }
 
     get shiftDate(){
-        return _shiftDate;
+        return this._shiftDate;
     }
 
     /**
@@ -80,5 +80,44 @@ class Shift{
             this._hasStudent = false;
         }
     }
+
+    /**
+     * Compares the dates of another shift obj. Returns true if the date of this shift is earlier in the week than the other shift or starts on the same day of the other shift. Returns false otherwise.
+     */
+    isEarlierInWeekThan(otherShift){
+        let orderOfDates = ["Mon","Tue","Wed","Thu","Fri"] //For the computer to understand, this is the order of dates.
+        let otherDate = otherShift.shiftDate
+        let thisDate = this._shiftDate
+
+        //get the indexes of associated data.
+        let otherIndex = orderOfDates.indexOf(otherDate)
+        let thisIndex = orderOfDates.indexOf(thisDate)
+
+        if(otherIndex>=thisIndex){
+            return true
+        }
+        else return false
+    }
+    
+    /**
+     * Compares the start times of another shift obj. Returns true if this shift starts ealier than the other shift. returns false otherwise.
+     */
+    startsEarlierThan(otherShift){
+        let otherStart = otherShift.shiftTime.selectedTime[0];
+        let thisStart = this._shiftTime.selectedTime[0];
+        if(thisStart<otherStart){
+            return true;
+        }
+        else return false;
+    }
+
+    /**
+     * Compares two shift objects. If there is any overlap in schedule objects then the function returns the overlap in an array.
+     */
+    conflict(){
+        //To be done later. Mostly for GUI elements
+    }
+    
+
 
 }

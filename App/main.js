@@ -48,16 +48,37 @@ function randomScore(Shifts,Students){
     }
 }
 
-
+/**
+ * Takes in a list of shifts stored in an ArrayList and sorts them
+ * @param {*} List arrayList object 
+ */
 function sortShifts(List){
     const output = new ArrayList();
     let tmpDate = "Mon";
     let tmpTime = 8.5;
+    let ptrSorted = 0; //Pointer to the last sorted element.
     for(i = 0; i<List.length(); i++){
+        //Get and store the properties of the current shift we are observing.
         let Shift = List.get(i);
-        let schedule = Shift.shiftTime.selectedTime;
+        let schedule = Shift.shiftTime.selectedTime; //Get the array from the schedule object.
         let startTime = schedule[0];
         let date = Shift.shiftDate;
+
+        //Compare to unsorted elements
+        for(j = ptrSorted; j<List.length(); j++){
+            //Get the other shift we are comparing to
+            let otherShift = List.get(j);
+            let otherSchedule = otherShift.shiftTime.selectedTime;
+            let otherStartTime = otherSchedule[0];
+            let otherDate = otherShift.shiftDate;
+
+            //Compare the two shifts. Shifts are sorted as such: A shift that is closer to the start of the week and starts ealier will come first.
+
+
+
+        }
+
+
     }
     
 }
@@ -113,10 +134,19 @@ function test(){
         }
     }
 
-    arrayStudents.randomize();
+    const sft1 = new Shift("WSC");
+    sft1.setTime(10, 14);
+    sft1.setDate("Tue");
 
-    sortShifts(arrayShifts);
+    const sft2 = new Shift("WSC");
+    sft2.setTime(8.5, 9.5);
+    sft2.setDate("Mon");
 
+    console.log(sft1);
+    console.log(sft2);
 
-    console.log(arrayShifts);
+    console.log(sft1.isEarlierInWeekThan(sft2)); //is a Tuesday shift earlier in the week than a Monday shift :False
+    console.log(sft1.startsEarlierThan(sft2)); //is 10 AM an earlier start time than 8:30 AM : False
+    console.log(sft2.isEarlierInWeekThan(sft1)); //is a Monday shift ealier in the week than a Tuesday shift : True
+    console.log(sft2.startsEarlierThan(sft1)); //is 8:30 AM an earlier start time than 10 AM: True
 }
