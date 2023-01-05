@@ -85,7 +85,7 @@ class Shift{
      * Compares the dates of another shift obj. Returns true if the date of this shift is earlier in the week than the other shift or starts on the same day of the other shift. Returns false otherwise.
      */
     isEarlierInWeekThan(otherShift){
-        let orderOfDates = ["Mon","Tue","Wed","Thu","Fri"] //For the computer to understand, this is the order of dates.
+        let orderOfDates = ["Mon","Tue","Wed","Thr","Fri"] //For the computer to understand, this is the order of dates.
         let otherDate = otherShift.shiftDate
         let thisDate = this._shiftDate
 
@@ -93,10 +93,15 @@ class Shift{
         let otherIndex = orderOfDates.indexOf(otherDate)
         let thisIndex = orderOfDates.indexOf(thisDate)
 
-        if(otherIndex>=thisIndex){
-            return true
+        if(otherIndex == -1){ //If element not found, ie: in proper syntax of strings, return false
+            return -1
         }
-        else return false
+        else if(otherIndex>thisIndex){
+            return 1
+        }
+        else if(otherIndex == thisIndex){
+            return 0
+        }
     }
     
     /**

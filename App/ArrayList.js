@@ -20,8 +20,8 @@ class ArrayList {
      * @param {*} element element to be added.
      */
     addAt(index,element){
-        let prt1 = this.ArrayList.splice(index,0);
-        let prt2 = this.ArrayList;
+        let prt1 = this.ArrayList.slice(0,index);
+        let prt2 = this.ArrayList.slice(index,this.ArrayList.length);
         prt1.push(element);
         this.ArrayList = prt1.concat(prt2);
     }

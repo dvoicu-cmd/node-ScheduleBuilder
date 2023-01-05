@@ -30,7 +30,7 @@ function addElement(List,Element){
  * @param {*} Element 
  */
 function addElementAt(List,index,Element){
-    List.addAt(Element,index,Element);
+    List.addAt(index,Element);
     return List;
 }
 
@@ -49,40 +49,39 @@ function randomScore(Shifts,Students){
 }
 
 /**
- * Takes in a list of shifts stored in an ArrayList and sorts them
+ * Takes in a list of shifts stored in an ArrayList and sorts them.
  * @param {*} List arrayList object 
  */
 function sortShifts(List){
     const output = new ArrayList();
-    let tmpDate = "Mon";
-    let tmpTime = 8.5;
     let ptrSorted = 0; //Pointer to the last sorted element.
+    let prtCompare = 0;
+    let sorted = false;
+    let tmp;
+
     for(i = 0; i<List.length(); i++){
-        //Get and store the properties of the current shift we are observing.
-        let Shift = List.get(i);
-        let schedule = Shift.shiftTime.selectedTime; //Get the array from the schedule object.
-        let startTime = schedule[0];
-        let date = Shift.shiftDate;
-
-        //Compare to unsorted elements
-        for(j = ptrSorted; j<List.length(); j++){
-            //Get the other shift we are comparing to
-            let otherShift = List.get(j);
-            let otherSchedule = otherShift.shiftTime.selectedTime;
-            let otherStartTime = otherSchedule[0];
-            let otherDate = otherShift.shiftDate;
-
-            //Compare the two shifts. Shifts are sorted as such: A shift that is closer to the start of the week and starts ealier will come first.
-
-
-
+        for (j = i; j<List.length(); j++){
+            sft1 = List.get(i);
+            sft2 = List.get(j);
+            if(sft2.isEarlierInWeekThan(sft1) == 1){
+                    List.remove(i);
+                    List.addAt(i,sft2);
+                    List.remove(j);
+                    List.addAt(j,sft1);
+            }
+            //In the case that we are looking at the same date
+            if(sft2.isEarlierInWeekThan(sft1) == 0){
+                if(sft2.startsEarlierThan(sft1)){
+                    //Duplicate code, make this a method in arrayList class called swap.
+                    List.remove(i);
+                    List.addAt(i,sft2);
+                    List.remove(j);
+                    List.addAt(j,sft1);
+                }
+            }   
         }
-
-
     }
-    
 }
-
 /**
  * Pass in the list, returns the list randomized
  * @param {*} List 
@@ -130,9 +129,14 @@ function test(){
             const sft = new Shift("WSC");
             sft.setTime(j+8.5, j+9.0);
             sft.setDate(date);
-            arrayShifts.add(sft);
+            arrayShifts.add(sft); 
         }
     }
+
+
+    /**
+     * Testing comparisions
+     */
 
     const sft1 = new Shift("WSC");
     sft1.setTime(10, 14);
@@ -149,4 +153,52 @@ function test(){
     console.log(sft1.startsEarlierThan(sft2)); //is 10 AM an earlier start time than 8:30 AM : False
     console.log(sft2.isEarlierInWeekThan(sft1)); //is a Monday shift ealier in the week than a Tuesday shift : True
     console.log(sft2.startsEarlierThan(sft1)); //is 8:30 AM an earlier start time than 10 AM: True
+
+
+    //testing addAt
+    // const tmpTest = new ArrayList();
+    // tmpTest.add(std1);
+    // tmpTest.add(std2);
+    // tmpTest.add(sft1);
+    // tmpTest.add(sft2);
+    // tmpTest.addAt(1,std4);
+    // console.log(tmpTest);
+
+    /**
+     * Testing sort
+     */
+
+    const sft3 = new Shift("WSC");
+    sft3.setTime(17, 21);
+    sft3.setDate("Fri");
+
+    const sft4 = new Shift("WSC");
+    sft4.setTime(8.5, 9.5);
+    sft4.setDate("Thr");
+
+    const sft5 = new Shift("WSC");
+    sft5.setTime(9.5, 13);
+    sft5.setDate("Thr");
+
+    const listShiftSort = new ArrayList();
+    listShiftSort.add(sft1);
+    listShiftSort.add(sft2);
+    listShiftSort.add(sft3);
+    listShiftSort.add(sft4);
+    listShiftSort.add(sft5);
+
+    console.log(listShiftSort);
+
+    const listShiftSortCpy = new ArrayList();
+    listShiftSortCpy.add(sft1);
+    listShiftSortCpy.add(sft2);
+    listShiftSortCpy.add(sft3);
+    listShiftSortCpy.add(sft4);
+    listShiftSortCpy.add(sft5);
+
+    sortShifts(listShiftSortCpy)
+
+    console.log(listShiftSortCpy);
+
+
 }
