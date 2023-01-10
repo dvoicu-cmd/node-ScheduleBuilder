@@ -38,14 +38,44 @@ function addElementAt(List,index,Element){
 function randomScore(Shifts,Students){
     Students.randomize();
     Shifts.randomize();
-    for(i = 0; i < Shifts.length(); i++){ //For each shift
-        const studentScore = new ArrayList();
-        for(j = 0; j < Students.length(); j++){
-            const shift = Shifts.get()
+    const studentScore = new ArrayList();
+    for(i = 0; i < Student.length(); i++){ //For each student
+        const student = Student.get(i);
+        for(j = 0; j < Shift.length(); j++){ //For each shift
+            const shift = Shifts.get(j);
+            let score = scoreCompatability(shift,student);
 
 
         }
     }
+}
+
+/**
+ * Returns a score of compatability between a shift and student.
+ * A score is how many 30 min chunks in a shift's schedule and a student's schedule match up.
+ * @param {*} Shift 
+ * @param {*} Student 
+ */
+function scoreCompatability(Shift,Student){
+    let score = 0;
+    let sftSchedule = Shift.shiftTime;
+    //First check if the student is avalabile on the day of the shift
+    let sftDate = Shift.shiftDate;
+    let stdSchedule = Student.avalabilityAt(sftDate); //Getting the specific avalability of the student on the day of the shift.
+    if(stdSchedule.selectedTime.length == 0){ //Return 0 if there is no avalability.
+        return score; 
+    }
+
+    for(i = 0; i<sftSchedule.selectedTime.length; i++){
+        for(j = 0; j<stdSchedule.selectedTime.length; j++){ //This sucks. There must be a more efficent way to compare these two ordered lists.
+            let chunkSft = sftSchedule.selectedTime.at(i);
+            let chunkStd = stdSchedule.selectedTime.at(j);
+            if(chunkSft == chunkStd){
+                score++;
+            }
+        }
+    }
+    return score;
 }
 
 /**
@@ -93,112 +123,134 @@ function randomizeList(List){
 }
 
 function test(){
-    const arrayShifts = new ArrayList();
-    const arrayStudents = new ArrayList();
+    // const arrayShifts = new ArrayList();
+    // const arrayStudents = new ArrayList();
     
-    //Students Sample
-    const std1 = new Student('Dan');
-    const std2 = new Student('Ali');
-    const std3 = new Student('Sara');
-    const std4 = new Student('Billy');
+    // //Students Sample
+    // const std1 = new Student('Dan');
+    // const std2 = new Student('Ali');
+    // const std3 = new Student('Sara');
+    // const std4 = new Student('Billy');
     
-    arrayStudents.add(std1);
-    arrayStudents.add(std2);
-    arrayStudents.add(std3);
-    arrayStudents.add(std4);
+    // arrayStudents.add(std1);
+    // arrayStudents.add(std2);
+    // arrayStudents.add(std3);
+    // arrayStudents.add(std4);
 
-    //Shifts Sample
-    for(i = 0; i<5; i++){ //for 5 days.
-        for(j = 0; j<7; j++){ // make 7 shifts.
-            let date;
-            if(i == 0){
-                date = "Mon";
-            }
-            if(i == 1){
-                date = "Tue";
-            }
-            if(i == 2){
-                date = "Wed";
-            }
-            if(i == 3){
-                date = "Thu";
-            }
-            if(i == 4){
-                date = "Fri";
-            }
-            const sft = new Shift("WSC");
-            sft.setTime(j+8.5, j+9.0);
-            sft.setDate(date);
-            arrayShifts.add(sft); 
-        }
-    }
+    // //Shifts Sample
+    // for(i = 0; i<5; i++){ //for 5 days.
+    //     for(j = 0; j<7; j++){ // make 7 shifts.
+    //         let date;
+    //         if(i == 0){
+    //             date = "Mon";
+    //         }
+    //         if(i == 1){
+    //             date = "Tue";
+    //         }
+    //         if(i == 2){
+    //             date = "Wed";
+    //         }
+    //         if(i == 3){
+    //             date = "Thu";
+    //         }
+    //         if(i == 4){
+    //             date = "Fri";
+    //         }
+    //         const sft = new Shift("WSC");
+    //         sft.setTime(j+8.5, j+9.0);
+    //         sft.setDate(date);
+    //         arrayShifts.add(sft); 
+    //     }
+    // }
+
+
+    // /**
+    //  * Testing comparisions
+    //  */
+
+    // const sft1 = new Shift("WSC");
+    // sft1.setTime(10, 14);
+    // sft1.setDate("Tue");
+
+    // const sft2 = new Shift("WSC");
+    // sft2.setTime(8.5, 9.5);
+    // sft2.setDate("Mon");
+
+    // console.log(sft1);
+    // console.log(sft2);
+
+    // console.log(sft1.isEarlierInWeekThan(sft2)); //is a Tuesday shift earlier in the week than a Monday shift :False
+    // console.log(sft1.startsEarlierThan(sft2)); //is 10 AM an earlier start time than 8:30 AM : False
+    // console.log(sft2.isEarlierInWeekThan(sft1)); //is a Monday shift ealier in the week than a Tuesday shift : True
+    // console.log(sft2.startsEarlierThan(sft1)); //is 8:30 AM an earlier start time than 10 AM: True
+
+
+    // //testing addAt
+    // // const tmpTest = new ArrayList();
+    // // tmpTest.add(std1);
+    // // tmpTest.add(std2);
+    // // tmpTest.add(sft1);
+    // // tmpTest.add(sft2);
+    // // tmpTest.addAt(1,std4);
+    // // console.log(tmpTest);
+
+    // /**
+    //  * Testing sort
+    //  */
+
+    // const sft3 = new Shift("WSC");
+    // sft3.setTime(17, 21);
+    // sft3.setDate("Fri");
+
+    // const sft4 = new Shift("WSC");
+    // sft4.setTime(8.5, 9.5);
+    // sft4.setDate("Thr");
+
+    // const sft5 = new Shift("WSC");
+    // sft5.setTime(9.5, 13);
+    // sft5.setDate("Thr");
+
+    // const listShiftSort = new ArrayList();
+    // listShiftSort.add(sft1);
+    // listShiftSort.add(sft2);
+    // listShiftSort.add(sft3);
+    // listShiftSort.add(sft4);
+    // listShiftSort.add(sft5);
+
+    // console.log(listShiftSort);
+
+    // const listShiftSortCpy = new ArrayList();
+    // listShiftSortCpy.add(sft1);
+    // listShiftSortCpy.add(sft2);
+    // listShiftSortCpy.add(sft3);
+    // listShiftSortCpy.add(sft4);
+    // listShiftSortCpy.add(sft5);
+
+    // sortShifts(listShiftSortCpy)
+
+    // console.log(listShiftSortCpy);
 
 
     /**
-     * Testing comparisions
+     * Testing the get schedule of specified date of student.
      */
-
-    const sft1 = new Shift("WSC");
-    sft1.setTime(10, 14);
-    sft1.setDate("Tue");
-
-    const sft2 = new Shift("WSC");
-    sft2.setTime(8.5, 9.5);
-    sft2.setDate("Mon");
-
-    console.log(sft1);
-    console.log(sft2);
-
-    console.log(sft1.isEarlierInWeekThan(sft2)); //is a Tuesday shift earlier in the week than a Monday shift :False
-    console.log(sft1.startsEarlierThan(sft2)); //is 10 AM an earlier start time than 8:30 AM : False
-    console.log(sft2.isEarlierInWeekThan(sft1)); //is a Monday shift ealier in the week than a Tuesday shift : True
-    console.log(sft2.startsEarlierThan(sft1)); //is 8:30 AM an earlier start time than 10 AM: True
+    sampleStd = new Student("Bill");
+    sampleStd.reduceAvailability("Mon", 9.0, 21);
+    console.log(sampleStd.avalabilityAt("Mon"));
 
 
-    //testing addAt
-    // const tmpTest = new ArrayList();
-    // tmpTest.add(std1);
-    // tmpTest.add(std2);
-    // tmpTest.add(sft1);
-    // tmpTest.add(sft2);
-    // tmpTest.addAt(1,std4);
-    // console.log(tmpTest);
 
     /**
-     * Testing sort
+     * Testing Compatability Score function
      */
-
-    const sft3 = new Shift("WSC");
-    sft3.setTime(17, 21);
-    sft3.setDate("Fri");
-
-    const sft4 = new Shift("WSC");
-    sft4.setTime(8.5, 9.5);
-    sft4.setDate("Thr");
-
-    const sft5 = new Shift("WSC");
-    sft5.setTime(9.5, 13);
-    sft5.setDate("Thr");
-
-    const listShiftSort = new ArrayList();
-    listShiftSort.add(sft1);
-    listShiftSort.add(sft2);
-    listShiftSort.add(sft3);
-    listShiftSort.add(sft4);
-    listShiftSort.add(sft5);
-
-    console.log(listShiftSort);
-
-    const listShiftSortCpy = new ArrayList();
-    listShiftSortCpy.add(sft1);
-    listShiftSortCpy.add(sft2);
-    listShiftSortCpy.add(sft3);
-    listShiftSortCpy.add(sft4);
-    listShiftSortCpy.add(sft5);
-
-    sortShifts(listShiftSortCpy)
-
-    console.log(listShiftSortCpy);
-
+    sampleSft = new Shift("WSC"); //Test different dates
+    sampleSft.setTime(8.5,9.0);
+    sampleSft.setDate("Mon");
+    console.log(sampleSft.shiftTime);
+    console.log(scoreCompatability(sampleSft,sampleStd));
+    sampleSft.setDate("Fri");
+    sampleStd.reduceAvailability("Fri",8.5,21);
+    console.log(scoreCompatability(sampleSft,sampleStd));
+     
 
 }

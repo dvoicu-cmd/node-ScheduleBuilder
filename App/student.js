@@ -70,6 +70,27 @@ class Student {
         this._assignedStudents.push(student);
     }
 
+    /**
+     * Gets a schedule object of a student on a specified date
+     * @param {"Mon","Tue","Wed","Thr","Fri"} date 
+     */
+    avalabilityAt(date){
+        switch(date){
+            case "Mon":
+                return this._avalability.at(0);
+            case "Tue":
+                return this._avalability.at(1);
+            case "Wed":
+                return this._avalability.at(2);
+            case "Thr":
+                return this._avalability.at(3);
+            case "Fri":
+                return this._avalability.at(4);
+            default:
+                console.log("No valid input for avalabilityAt(date) method");
+        }
+    }
+
     unassignShift(shift){
         indexOf = this._assignedStudents.indexOf(shift);
         prt1 = this._assignedStudents.splice(0,indexOf);
@@ -80,17 +101,33 @@ class Student {
 
     /**
      * A method to reduce the time when a student is available 
-     * @param {*} date a number from 0 to 4 that is used to select a particular schedule for a day of the week.
+     * @param {*} date a one of the strings: "Mon","Tue","Wed","Thr","Fri"
      * @param {*} timeFrom one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select a starting interval to crop availability.
      * @param {*} timeTo one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select an ending interval to crop availability.
      */
     reduceAvailability(date, timeFrom, timeTo){
-        if(date > 5 || date < 0){
-            throw RangeError;
+        let orderOfDates = ["Mon","Tue","Wed","Thr","Fri"]
+        switch(date){
+            case "Mon":
+                this._avalability[0].trim(timeFrom, timeTo);
+                break;
+            case "Tue":
+                this._avalability[1].trim(timeFrom, timeTo);
+                break;
+            case "Wed":
+                this._avalability[2].trim(timeFrom, timeTo);
+                break;
+            case "Thr":
+                this._avalability[3].trim(timeFrom, timeTo);
+                break;
+            case "Fri":
+                this._avalability[4].trim(timeFrom, timeTo);
+                break;
+            default:
+                console.log("No valid input for reduceAvailability method");
+                break;
         }
-        else {
-            this._avalability[date] = this._avalability[date].trim(timeFrom, timeTo);
-        }
+        return;
     }
 
     /**
@@ -104,7 +141,7 @@ class Student {
             throw RangeError;
         }
         else {
-            this._preference[date] = this._preference[date].trim(timeFrom, timeTo);
+            this._preference[date].trim(timeFrom, timeTo);
         }
     }
 
