@@ -35,19 +35,24 @@ function addElementAt(List,index,Element){
 }
 
 
-function randomScore(Shifts,Students){
-    Students.randomize();
-    Shifts.randomize();
-    const studentScore = new ArrayList();
-    for(i = 0; i < Student.length(); i++){ //For each student
-        const student = Student.get(i);
-        for(j = 0; j < Shift.length(); j++){ //For each shift
-            const shift = Shifts.get(j);
-            let score = scoreCompatability(shift,student);
+//KNOWN ISSUE: This crashes the app. There are too many iterations. In your sample it should be 40 operations. not 100+. Check the loops
 
-
+function randomScore(shifts,students){
+    students.randomize();
+    shifts.randomize();
+    const foundScores = new ArrayList();
+    for(i = 0; i < shifts.length(); i++) { //For each shift
+        shiftCompatability = new ArrayList();
+        let sft = shifts.get(i);
+        for(j = 0; j < students.length(); j++) { //For each student
+            let std = students.get(j);
+            let score = scoreCompatability(sft,std);
+            const relation = [sft,score,std];
+            foundScores.add(relation);
         }
+
     }
+    console.log(foundScores);
 }
 
 /**
@@ -66,13 +71,12 @@ function scoreCompatability(Shift,Student){
         return score; 
     }
 
-    for(i = 0; i<sftSchedule.selectedTime.length; i++){
-        for(j = 0; j<stdSchedule.selectedTime.length; j++){ //This sucks. There must be a more efficent way to compare these two ordered lists.
-            let chunkSft = sftSchedule.selectedTime.at(i);
-            let chunkStd = stdSchedule.selectedTime.at(j);
-            if(chunkSft == chunkStd){
-                score++;
-            }
+    //This must be k because there is a conflicting scope in the randomScore() method. If this is i, i in the randomScore() method will always be set to 3 due to this function always being called.
+    for(k = 0; k<sftSchedule.selectedTime.length; k++){
+        let chunkSft = sftSchedule.selectedTime.at(k);
+        let existsAt = stdSchedule.selectedTime.indexOf(chunkSft);
+        if(existsAt >= 0){
+            score++;
         }
     }
     return score;
@@ -117,51 +121,54 @@ function sortShifts(List){
  * @param {*} List 
  * @returns 
  */
-function randomizeList(List){
-    List.randomize();
-    return List;
-}
+// function randomizeList(List){
+//     List.randomize();
+//     return List;
+// }
 
 function test(){
-    // const arrayShifts = new ArrayList();
-    // const arrayStudents = new ArrayList();
+    const arrayShifts = new ArrayList();
+    const arrayStudents = new ArrayList();
     
-    // //Students Sample
-    // const std1 = new Student('Dan');
-    // const std2 = new Student('Ali');
-    // const std3 = new Student('Sara');
-    // const std4 = new Student('Billy');
+    //Students Sample
+    const std1 = new Student('Dan');
+    const std2 = new Student('Ali');
+    const std3 = new Student('Sara');
+    const std4 = new Student('Billy');
     
-    // arrayStudents.add(std1);
-    // arrayStudents.add(std2);
-    // arrayStudents.add(std3);
-    // arrayStudents.add(std4);
+    arrayStudents.add(std1);
+    arrayStudents.add(std2);
+    arrayStudents.add(std3);
+    arrayStudents.add(std4);
 
-    // //Shifts Sample
-    // for(i = 0; i<5; i++){ //for 5 days.
-    //     for(j = 0; j<7; j++){ // make 7 shifts.
-    //         let date;
-    //         if(i == 0){
-    //             date = "Mon";
-    //         }
-    //         if(i == 1){
-    //             date = "Tue";
-    //         }
-    //         if(i == 2){
-    //             date = "Wed";
-    //         }
-    //         if(i == 3){
-    //             date = "Thu";
-    //         }
-    //         if(i == 4){
-    //             date = "Fri";
-    //         }
-    //         const sft = new Shift("WSC");
-    //         sft.setTime(j+8.5, j+9.0);
-    //         sft.setDate(date);
-    //         arrayShifts.add(sft); 
-    //     }
-    // }
+    //Shifts Sample
+    for(i = 0; i<5; i++){ //for 5 days.
+        for(j = 0; j<2; j++){ // make 2 shifts.
+            let date;
+            if(i == 0){
+                date = "Mon";
+            }
+            if(i == 1){
+                date = "Tue";
+            }
+            if(i == 2){
+                date = "Wed";
+            }
+            if(i == 3){
+                date = "Thr";
+            }
+            if(i == 4){
+                date = "Fri";
+            }
+            const sft = new Shift("WSC");
+            sft.setTime(j+8.5, j+9.0);
+            sft.setDate(date);
+            arrayShifts.add(sft); 
+        }
+    }
+
+    console.log("starting computation");
+    randomScore(arrayShifts,arrayStudents);
 
 
     // /**
@@ -231,26 +238,26 @@ function test(){
     // console.log(listShiftSortCpy);
 
 
-    /**
-     * Testing the get schedule of specified date of student.
-     */
-    sampleStd = new Student("Bill");
-    sampleStd.reduceAvailability("Mon", 9.0, 21);
-    console.log(sampleStd.avalabilityAt("Mon"));
+    // /**
+    //  * Testing the get schedule of specified date of student.
+    //  */
+    // sampleStd = new Student("Bill");
+    // sampleStd.reduceAvailability("Mon", 9.0, 21);
+    // console.log(sampleStd.avalabilityAt("Mon"));
 
 
 
-    /**
-     * Testing Compatability Score function
-     */
-    sampleSft = new Shift("WSC"); //Test different dates
-    sampleSft.setTime(8.5,9.0);
-    sampleSft.setDate("Mon");
-    console.log(sampleSft.shiftTime);
-    console.log(scoreCompatability(sampleSft,sampleStd));
-    sampleSft.setDate("Fri");
-    sampleStd.reduceAvailability("Fri",8.5,21);
-    console.log(scoreCompatability(sampleSft,sampleStd));
+    // /**
+    //  * Testing Compatability Score function
+    //  */
+    // sampleSft = new Shift("WSC"); //Test different dates
+    // sampleSft.setTime(8.5,9.0);
+    // sampleSft.setDate("Mon");
+    // console.log(sampleSft.shiftTime);
+    // console.log(scoreCompatability(sampleSft,sampleStd));
+    // sampleSft.setDate("Fri");
+    // sampleStd.reduceAvailability("Fri",8.5,21);
+    // console.log(scoreCompatability(sampleSft,sampleStd));
      
 
 }

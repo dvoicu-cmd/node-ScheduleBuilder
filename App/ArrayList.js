@@ -68,7 +68,7 @@ class ArrayList {
      * a method to return the length of the arrayList
      * @returns The length of the arrayList
      */
-     length(){
+    length(){
         return this.ArrayList.length;
     }
 
