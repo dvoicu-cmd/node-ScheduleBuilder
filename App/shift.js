@@ -123,6 +123,14 @@ class Shift{
         //To be done later. Mostly for GUI elements
     }
     
-
+    equals(otherShift){
+        if(this.shiftDate !== otherShift.shiftDate){
+            return false;
+        }
+        else if(this.shiftTime.equal(otherShift.shiftTime)){
+            return true;
+        }
+        else return false;
+    }
 
 }

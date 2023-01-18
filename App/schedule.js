@@ -85,6 +85,25 @@ class Schedule {
         this._selectedTime = generateHours();
     }
 
+    equal(otherSchedule){
+        otherSchedule.selectedTime;
+        let isEqual = true;
+
+        if(this.selectedTime.length == 0){
+            if(otherSchedule.selectedTime.length !== 0){
+                isEqual = false;
+                return isEqual;
+            }
+        }
+
+        for(i = 0; i < this.selectedTime.length; i++){
+            if(this.selectedTime[i] !== otherSchedule.selectedTime[i]){
+                isEqual = false;
+            }
+        }
+        return isEqual;
+    }
+
 }
 
 /**     

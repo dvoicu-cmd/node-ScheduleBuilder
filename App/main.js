@@ -38,8 +38,18 @@ function addElementAt(List,index,Element){
 //KNOWN ISSUE: This crashes the app. There are too many iterations. In your sample it should be 40 operations. not 100+. Check the loops
 
 function randomScore(shifts,students){
+
+    //Store the order of students before randomizing
+    let tmpStudents = initList();
+    for(i = 0; i<students.length(); i++){
+        tmpStudents.add(students.get(i));
+    }
+
+    //First randomize
     students.randomize();
     shifts.randomize();
+
+    //Then find the scores between shifts and students. Store scores in an array.
     const foundScores = new ArrayList();
     for(i = 0; i < shifts.length(); i++) { //For each shift
         shiftCompatability = new ArrayList();
@@ -48,11 +58,32 @@ function randomScore(shifts,students){
             let std = students.get(j);
             let score = scoreCompatability(sft,std);
             const relation = [sft,score,std];
-            foundScores.add(relation);
+            foundScores.add(relation); //Store
         }
+    }
+
+    //Sort the shifts, reset the students
+    sortShifts(shifts);
+    students = tmpStudents;
+
+    //Now sort and compile the mapping in our desired output.
+
+    let Mapping = initList();
+    for(i = 0; i<shifts.length(); i++) { //For each shift
+        let scoresWithThisShift = initList();
+        for (j = 0; j < foundScores.length(); j++){ //For each score
+            let currentScore = foundScores.get(j);
+            let specificShift = currentScore[0];
+            if(specificShift.equals(shifts.get(i))) { //If the shift of the relation matches with the currently compared to shift, then added to the list.
+                scoresWithThisShift.add(currentScore); //add the to the list
+            }
+        }
+        //Now sort the scores with this shift
+        sortScores(scoresWithThisShift);
+        Mapping.add(scoresWithThisShift);
 
     }
-    console.log(foundScores);
+    console.log(Mapping);
 }
 
 /**
@@ -94,28 +125,44 @@ function sortShifts(List){
     let tmp;
 
     for(i = 0; i<List.length(); i++){
-        for (j = i; j<List.length(); j++){
+        for(j = i; j<List.length(); j++){
             sft1 = List.get(i);
             sft2 = List.get(j);
             if(sft2.isEarlierInWeekThan(sft1) == 1){
-                    List.remove(i);
-                    List.addAt(i,sft2);
-                    List.remove(j);
-                    List.addAt(j,sft1);
+                    swap(List,i,j);
             }
             //In the case that we are looking at the same date
             if(sft2.isEarlierInWeekThan(sft1) == 0){
                 if(sft2.startsEarlierThan(sft1)){
                     //Duplicate code, make this a method in arrayList class called swap.
-                    List.remove(i);
-                    List.addAt(i,sft2);
-                    List.remove(j);
-                    List.addAt(j,sft1);
+                    swap(List,i,j);
                 }
             }   
         }
     }
 }
+
+function sortScores(Scores){
+    for(j = 0; j < Scores.length(); j++){
+        for(k = j; k<Scores.length(); k++){
+            scr1 = Scores.get(j);
+            scr2 = Scores.get(k);
+            if(scr1[1] < scr2[1]){
+                swap(Scores,j,k);
+            }
+        }
+    }
+}
+
+function swap(List,index1,index2){
+    let element1 = List.get(index1);
+    let element2 = List.get(index2);
+    List.remove(index1);
+    List.addAt(index1,element2);
+    List.remove(index2);
+    List.addAt(index2,element1);
+}
+
 /**
  * Pass in the list, returns the list randomized
  * @param {*} List 
@@ -135,11 +182,21 @@ function test(){
     const std2 = new Student('Ali');
     const std3 = new Student('Sara');
     const std4 = new Student('Billy');
+    const std5 = new Student('Mike');
     
+    std1.reduceAvailability("Mon",8.5,21.0);
+    std2.reduceAvailability("Tue",8.5,21.0);
+    std3.reduceAvailability("Wed",8.5,21.0);
+    std4.reduceAvailability("Thr",8.5,21.0);
+    std5.reduceAvailability("Fri",8.5,21.0);
+
+
     arrayStudents.add(std1);
     arrayStudents.add(std2);
     arrayStudents.add(std3);
     arrayStudents.add(std4);
+    arrayStudents.add(std5);
+
 
     //Shifts Sample
     for(i = 0; i<5; i++){ //for 5 days.
@@ -167,8 +224,25 @@ function test(){
         }
     }
 
-    console.log("starting computation");
-    randomScore(arrayShifts,arrayStudents);
+    sftEqu1 = new Shift("WSC");
+    sftEqu2 = new Shift("WSC");
+    sftEqu1.setTime(8.5,9.0);
+    sftEqu1.setDate("Tue");
+    sftEqu2.setTime(8.5,9.0);
+    sftEqu2.setTime("Mon");
+    
+    sftNon = new Shift("WSC");
+    sftNon.setTime(16.5,21.0);
+    sftNon.setDate("Tue");
+
+
+    console.log(sftEqu1.equals(sftEqu2));
+    console.log(sftEqu1.equals(sftNon));
+
+    console.log("Starting computation");
+    let mapping = randomScore(arrayShifts,arrayStudents);
+    console.log(mapping);
+
 
 
     // /**
