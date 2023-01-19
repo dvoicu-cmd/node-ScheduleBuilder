@@ -34,9 +34,11 @@ function addElementAt(List,index,Element){
     return List;
 }
 
-
-//KNOWN ISSUE: This crashes the app. There are too many iterations. In your sample it should be 40 operations. not 100+. Check the loops
-
+/**
+ * 
+ * @param {*} shifts 
+ * @param {*} students 
+ */
 function randomScore(shifts,students){
 
     //Store the order of students before randomizing
@@ -66,23 +68,31 @@ function randomScore(shifts,students){
     sortShifts(shifts);
     students = tmpStudents;
 
-    //Now sort and compile the mapping in our desired output.
-
+    //Now sort and compile the mapping in our desired output.    
     let Mapping = initList();
-    for(i = 0; i<shifts.length(); i++) { //For each shift
+    for(l = 0; l<shifts.length(); l++) { //For each shift, Note: there is another scope issue here. This must be l and not i. I think this is conflicting with the call of the equals method in line 77.
         let scoresWithThisShift = initList();
         for (j = 0; j < foundScores.length(); j++){ //For each score
             let currentScore = foundScores.get(j);
             let specificShift = currentScore[0];
-            if(specificShift.equals(shifts.get(i))) { //If the shift of the relation matches with the currently compared to shift, then added to the list.
+            if(specificShift.equals(shifts.get(l))) { //If the shift of the relation matches with the currently compared to shift, then added to the list.
                 scoresWithThisShift.add(currentScore); //add the to the list
             }
         }
         //Now sort the scores with this shift
         sortScores(scoresWithThisShift);
-        Mapping.add(scoresWithThisShift);
-
+        //Now that the scores are sorted, count how many 0s
+        let cnt0 = cnt0Scores(scoresWithThisShift);
+        //Then create the array [count of 0s, {scoresWithThisShift}]
+        let addToMapping = initList();
+        addToMapping.add(cnt0);
+        addToMapping.add(scoresWithThisShift);
+        //Add to the mapping
+        Mapping.add(addToMapping);
     }
+
+
+
     console.log(Mapping);
 }
 
@@ -118,12 +128,6 @@ function scoreCompatability(Shift,Student){
  * @param {*} List arrayList object 
  */
 function sortShifts(List){
-    const output = new ArrayList();
-    let ptrSorted = 0; //Pointer to the last sorted element.
-    let prtCompare = 0;
-    let sorted = false;
-    let tmp;
-
     for(i = 0; i<List.length(); i++){
         for(j = i; j<List.length(); j++){
             sft1 = List.get(i);
@@ -134,7 +138,6 @@ function sortShifts(List){
             //In the case that we are looking at the same date
             if(sft2.isEarlierInWeekThan(sft1) == 0){
                 if(sft2.startsEarlierThan(sft1)){
-                    //Duplicate code, make this a method in arrayList class called swap.
                     swap(List,i,j);
                 }
             }   
@@ -144,11 +147,23 @@ function sortShifts(List){
 
 function sortScores(Scores){
     for(j = 0; j < Scores.length(); j++){
-        for(k = j; k<Scores.length(); k++){
-            scr1 = Scores.get(j);
-            scr2 = Scores.get(k);
-            if(scr1[1] < scr2[1]){
+        for(k = j; k < Scores.length(); k++){
+            let scr1 = Scores.get(j);
+            let scr2 = Scores.get(k);
+            if(scr1[1] > scr2[1]){
                 swap(Scores,j,k);
+            }
+        }
+    }
+}
+
+function sortMapping(Map){
+    for(j = 0; j < Map.length(); j++){
+        for(k = j; k < Map.length(); k++){
+            let scoreCnt1 = Map.get(j).get(0);
+            let scoreCnt2 = map.get(k).get(0);
+            if(scoreCnt1 > ScoreCnt2){
+                swap(Map,j,k);
             }
         }
     }
@@ -161,6 +176,26 @@ function swap(List,index1,index2){
     List.addAt(index1,element2);
     List.remove(index2);
     List.addAt(index2,element1);
+}
+
+/**
+ * Given that it's sorted
+ * @param {*} Scores 
+ * @returns 
+ */
+function cnt0Scores(Scores){
+    let cnt0 = 0;
+    for(j = 0; j < Scores.length(); j++){
+        scr = Scores.get(j);
+        scrNum = scr[1];
+        if(scrNum == 0) {
+            cnt0++;
+        }
+        if(scrNum > 0){
+            break;
+        }
+    }
+    return cnt0;
 }
 
 /**
@@ -239,8 +274,11 @@ function test(){
     console.log(sftEqu1.equals(sftEqu2));
     console.log(sftEqu1.equals(sftNon));
 
+
+    
+
     console.log("Starting computation");
-    let mapping = randomScore(arrayShifts,arrayStudents);
+    let mapping = randomScore(arrayShifts,arrayStudents); //IT is over flowing again
     console.log(mapping);
 
 
