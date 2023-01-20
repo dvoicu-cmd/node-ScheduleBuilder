@@ -15,17 +15,45 @@
     <button onclick=test()>Test</button>
 
     <div class="ObjContainer" id="Students">
-        <h2>List of Students:</h2>
-        <button onclick=addStudent()>Add Student</button>
-    </div>
+
+        <div id="studentManagement">
+            <h2 class="Titles"id="stdManagementTitle">List of Students:</h2>
+                <div id="stdList">
+                   
+                    <div class="stds" id="0">
+                        <label>
+                            Dan
+                        </label>
+                    </div>
+
+                </div> <!-- End of student list -->
+
+                <br>
+
+            <div id="addStudents">
+                <label>Input Name:</label>
+                <input id="stdName"> 
+                <br>
+                <button onclick=addStudent()>Add Student</button>
+            </div>
+            
+        </div>
+
+        
+    </div> <!-- End of student management -->
+    
     <div class="ObjContainer" id="Shifts">
-        <h2>List of Shifts:</h2>
-        <button>Add Shift</button>
+        <h2 class="Titles">List of Shifts:</h2>
+        <button onclick=>Add Shift</button>
     </div>
+
     <div class="ObjContainer" id="Calendar">
-        <h2>Possible Shifts:</h2>
+        <h2 class="Titles">Possible Shifts:</h2>
     </div>
+
 </body>
+
+
 <script src="main.js"></script>
 <script src="schedule.js"></script>
 <script src="student.js"></script>

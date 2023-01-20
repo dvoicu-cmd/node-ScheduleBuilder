@@ -1,7 +1,9 @@
 /**
- * The main.js file contains contents that will be displayed to the end user. It brings together all the classes into one file that manages them all.
+ * main.js contains a varity of algorithms used for the app including: 
+ * - Sorting algorithms for shifts, scores, and mappings
+ * - Wrapper functions for the ArrayList class
+ * - The randomScore()
  */
-
 
 /**
  * Initializes a new arrayList()
@@ -35,7 +37,7 @@ function addElementAt(List,index,Element){
 }
 
 /**
- * 
+ * Given an ArrayList of shift objects and student objects, randomeScore() will return a 3D
  * @param {*} shifts 
  * @param {*} students 
  */
@@ -91,7 +93,7 @@ function randomScore(shifts,students){
         Mapping.add(addToMapping);
     }
 
-
+    sortMapping(Mapping);
 
     console.log(Mapping);
 }
@@ -145,6 +147,10 @@ function sortShifts(List){
     }
 }
 
+/**
+ * 
+ * @param {*} Scores 
+ */
 function sortScores(Scores){
     for(j = 0; j < Scores.length(); j++){
         for(k = j; k < Scores.length(); k++){
@@ -157,18 +163,28 @@ function sortScores(Scores){
     }
 }
 
+/**
+ * 
+ * @param {*} Map 
+ */
 function sortMapping(Map){
     for(j = 0; j < Map.length(); j++){
         for(k = j; k < Map.length(); k++){
             let scoreCnt1 = Map.get(j).get(0);
-            let scoreCnt2 = map.get(k).get(0);
-            if(scoreCnt1 > ScoreCnt2){
+            let scoreCnt2 = Map.get(k).get(0);
+            if(scoreCnt1 < scoreCnt2){
                 swap(Map,j,k);
             }
         }
     }
 }
 
+/**
+ * 
+ * @param {*} List 
+ * @param {*} index1 
+ * @param {*} index2 
+ */
 function swap(List,index1,index2){
     let element1 = List.get(index1);
     let element2 = List.get(index2);
@@ -208,29 +224,83 @@ function cnt0Scores(Scores){
 //     return List;
 // }
 
+
 function test(){
     const arrayShifts = new ArrayList();
     const arrayStudents = new ArrayList();
     
-    //Students Sample
-    const std1 = new Student('Dan');
-    const std2 = new Student('Ali');
-    const std3 = new Student('Sara');
-    const std4 = new Student('Billy');
-    const std5 = new Student('Mike');
+    // //Students Sample
+    // const std1 = new Student('Dan');
+    // const std2 = new Student('Ali');
+    // const std3 = new Student('Sara');
+    // const std4 = new Student('Billy');
+    // const std5 = new Student('Mike');
     
-    std1.reduceAvailability("Mon",8.5,21.0);
-    std2.reduceAvailability("Tue",8.5,21.0);
-    std3.reduceAvailability("Wed",8.5,21.0);
-    std4.reduceAvailability("Thr",8.5,21.0);
-    std5.reduceAvailability("Fri",8.5,21.0);
+    // std1.reduceAvailability("Mon",8.5,21.0);
+    // std2.reduceAvailability("Tue",8.5,21.0);
+    // std3.reduceAvailability("Wed",8.5,21.0);
+    // std4.reduceAvailability("Thr",8.5,21.0);
+    // std5.reduceAvailability("Fri",8.5,21.0);
 
 
-    arrayStudents.add(std1);
-    arrayStudents.add(std2);
-    arrayStudents.add(std3);
-    arrayStudents.add(std4);
-    arrayStudents.add(std5);
+    // arrayStudents.add(std1);
+    // arrayStudents.add(std2);
+    // arrayStudents.add(std3);
+    // arrayStudents.add(std4);
+    // arrayStudents.add(std5);
+
+
+    //Students Sample
+    const Baran = new Student('Baran Shajari');
+    Baran.reduceAvailability("Thr",19.5,20.5);
+    Baran.reduceAvailability("Fri",14.0,19.0);
+    
+    const Justin = new Student('Justin Balkisson');
+    Justin.reduceAvailability("Mon",11.5,13.0);
+    Justin.reduceAvailability("Mon",17.5,21.0);
+    Justin.reduceAvailability("Tue",8.5,21.0);
+    Justin.reduceAvailability("Wed",11.5,13.0);
+    Justin.reduceAvailability("Wed",14.5,21.0);
+    Justin.reduceAvailability("Thr",9.0,11.0);
+    Justin.reduceAvailability("Thr",13.0,15.0);
+    Justin.reduceAvailability("Thr",18.0,21.0);
+    Justin.reduceAvailability("Fri",13.5,15.5);
+    Justin.reduceAvailability("Fri",18.0,21.0);
+
+    const Sara = new Student('Sara Malik Araibi');
+    Sara.reduceAvailability("Mon",11.5,14.5);
+    Sara.reduceAvailability("Tue",10.0,11.5);
+    Sara.reduceAvailability("Tue",16.0,17.5);
+    Sara.reduceAvailability("Wed",11.5,13.0);
+    Sara.reduceAvailability("Wed",18.0,19.0);
+    Sara.reduceAvailability("Thr",13.0,15.0);
+    Sara.reduceAvailability("Thr",16.0,17.5);
+    Sara.reduceAvailability("Fri",10.0,11.5);
+    Sara.reduceAvailability("Fri",13.5,21.0);
+
+    const Dan = new Student('Dan Stefan Voicu');
+    Dan.reduceAvailability("Mon",8.5,10.5);
+    Dan.reduceAvailability("Mon",11.5,12.5);
+    Dan.reduceAvailability("Mon",16.0,19.0);
+    Dan.reduceAvailability("Tue",10.0,11.5);
+    Dan.reduceAvailability("Wed",8.5,9.5);
+    Dan.reduceAvailability("Wed",11.5,12.5);
+    Dan.reduceAvailability("Wed",16.0,17.5);
+    Dan.reduceAvailability("Wed",19.0,20.0);
+    Dan.reduceAvailability("Thr",10.0,11.5);
+    Dan.reduceAvailability("Thr",16.0,17.5);
+    Dan.reduceAvailability("Fri",8.5,8.5);
+    Dan.reduceAvailability("Fri",11.5,12.5);
+
+    // const Ali = new Student('Muhammad Ali');
+    // Ali.reduceAvailability("Mon",9.0,10.5);
+    // Ali.reduceAvailability("Mon",11.5,13.0);
+    // Ali.reduceAvailability("Mon",14.5,17.5)
+
+    arrayStudents.add(Dan);
+    arrayStudents.add(Sara);
+    arrayStudents.add(Justin);
+    arrayStudents.add(Baran);
 
 
     //Shifts Sample
@@ -259,26 +329,32 @@ function test(){
         }
     }
 
-    sftEqu1 = new Shift("WSC");
-    sftEqu2 = new Shift("WSC");
-    sftEqu1.setTime(8.5,9.0);
-    sftEqu1.setDate("Tue");
-    sftEqu2.setTime(8.5,9.0);
-    sftEqu2.setTime("Mon");
+    sft = new Shift("WSC");
+    sft.setTime(13.5,15.5);
+    sft.setDate("Fri");
+    arrayShifts.add(sft);
+
+    //Testing Equalities
+    // sftEqu1 = new Shift("WSC");
+    // sftEqu2 = new Shift("WSC");
+    // sftEqu1.setTime(8.5,9.0);
+    // sftEqu1.setDate("Tue");
+    // sftEqu2.setTime(8.5,9.0);
+    // sftEqu2.setTime("Mon");
     
-    sftNon = new Shift("WSC");
-    sftNon.setTime(16.5,21.0);
-    sftNon.setDate("Tue");
+    // sftNon = new Shift("WSC");
+    // sftNon.setTime(16.5,21.0);
+    // sftNon.setDate("Tue");
 
 
-    console.log(sftEqu1.equals(sftEqu2));
-    console.log(sftEqu1.equals(sftNon));
+    // console.log(sftEqu1.equals(sftEqu2));
+    // console.log(sftEqu1.equals(sftNon));
 
 
     
 
     console.log("Starting computation");
-    let mapping = randomScore(arrayShifts,arrayStudents); //IT is over flowing again
+    let mapping = randomScore(arrayShifts,arrayStudents);
     console.log(mapping);
 
 

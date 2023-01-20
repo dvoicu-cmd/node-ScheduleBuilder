@@ -9,11 +9,18 @@ let arrayShifts = initList();
 let arrayStudents = initList();
 let Mapping;
 
+let Dan = new Student("Dan");
+arrayStudents.add(Dan);
+
 /**
- * 
+ * Adds a student to the arrayOfStudents
  */
 function addStudent(){
-
+    for(i = 0; i< arrayStudents.length(); i++){
+        let std = document.createElement("label");
+        let stdList = doccument.getElementById(stdList);
+        stdList.appendChild(std);
+    }
 }
 
 /**
@@ -51,11 +58,16 @@ function displayMapping(){
 
 }
 
-
+/**
+ * 
+ */
 function inportData(){
 
 }
 
+/**
+ * 
+ */
 function exportData(){
     
 }

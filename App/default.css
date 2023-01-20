@@ -7,6 +7,50 @@ div.ObjContainer {
     border-color: black;
 }
 
+/* Back ground color */
 Body {
     background-color: azure;
 }
+
+/* All titles are move to the left by 5px*/
+.Titles {
+    margin-left: 5px;
+}
+
+
+/*
+*
+----------------------
+STUDENT MANAGEMENT BOX:
+----------------------
+*
+*/
+
+/* Title for student management */
+#addStudents {
+    margin-left: 10px;
+}
+
+/* Box of students */
+.stds {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+/* Controls */
+
+
+
+
+/*
+*
+--------------------
+SHIFT MANAGEMENT BOX
+--------------------
+*
+*/
+
