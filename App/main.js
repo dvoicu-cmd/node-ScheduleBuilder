@@ -5,41 +5,72 @@
  * - The randomScore()
  */
 
+
+/**
+ * 
+ * --------------------------------------
+ * Wrapper methods for arrayList objects.
+ * --------------------------------------
+ * 
+ */
+
+
 /**
  * Initializes a new arrayList()
- * @returns 
+ * @returns a new ArrayList object.
  */
 function initList(){
     const List = new ArrayList();
     return List;
 }
 /**
- * Pass in a list with an element, returns the list with the element added
- * Please don't mix students and shift lists.
- * @param {*} List
- * @param {*} Element 
- * @returns List with element added.
+ * calls the add method on an arrayList object
+ * Don't mix students and shift lists.
+ * @param {ArrayList} List arrayList object.
+ * @param {*} Element element to be added.
  */
 function addElement(List,Element){
     List.add(Element);
-    return List;
 }
 
 /**
- * Pass in a list with an index and an element, then returns the list with the element added at the specified index
- * @param {*} List 
- * @param {*} index 
- * @param {*} Element 
+ * Pass in a list with an index and an element, and then adds a new entry next to the specified element in the ArrayList object.
+ * @param {ArrayList} List inputted arrayList object.
+ * @param {Positive Integer} index a positive integer to select which index the element will be added next to.
+ * @param {*} Element element to be added.
  */
 function addElementAt(List,index,Element){
     List.addAt(index,Element);
-    return List;
 }
 
 /**
- * Given an ArrayList of shift objects and student objects, randomeScore() will return a 3D
- * @param {*} shifts 
- * @param {*} students 
+ * Pass in the list, returns the list randomized
+ * @param {*} List the ArrayList to be randomized.
+ */
+function randomizeList(List){
+    List.randomize();
+}
+
+
+/**
+ * 
+ * ---------------------------------
+ * Main assesment/scoring algorithm.
+ * ---------------------------------
+ * 
+ */
+
+
+/**
+ * Given an ArrayList of shift objects and student objects, randomeScore() will return a package that dipicts the score for all shift to student pairs.
+ * @param {ArrayList} shifts an arrayList of Shift objects.
+ * @param {ArrayList} students an arrayList of Student objects.
+ * @returns A mapping/package of the evaluation done in the following form: [ [cnt0 , [Shift, Score, Student] ] [cnt0 , [Shift, Score, Student] ] ... [ cnt0 , [Shift, Score, Student ] ]. 
+ * cnt0 = the amount of times a score of a shift to student relation is 0.
+ * score = the number of times a 30min chunks in a Shift's schedule matches with a Student's Schedule.
+ * Each entry of [cnt0 , [Shift, Score, Student] will contain the same shift.
+ * Each entry in the package is sorted by cnt0, from the most cnt0s to the least.
+ * cnt0 directly correlates to how difficult the shift will be to cover.
  */
 function randomScore(shifts,students){
 
@@ -66,7 +97,7 @@ function randomScore(shifts,students){
         }
     }
 
-    //Sort the shifts, reset the students
+    //Sort the shifts, reset the students.
     sortShifts(shifts);
     students = tmpStudents;
 
@@ -93,16 +124,62 @@ function randomScore(shifts,students){
         Mapping.add(addToMapping);
     }
 
+    //Sort
     sortMapping(Mapping);
 
     console.log(Mapping);
 }
 
+
+/**
+ * 
+ * -----------------
+ * Helper Functions.
+ * -----------------
+ * 
+ */
+
+
+/**
+ * Helper function that switches two entries of an arrayList object
+ * @param {ArrayList} List The ArrayList inputted.
+ * @param {Positive Integer} index1 the first index to swap. 
+ * @param {Positive Integer} index2 the second index to swap.
+ */
+function swap(List,index1,index2){
+    let element1 = List.get(index1);
+    let element2 = List.get(index2);
+    List.remove(index1);
+    List.addAt(index1,element2);
+    List.remove(index2);
+    List.addAt(index2,element1);
+}
+
+/**
+ * Given a list of sorted [Shift score Student] triplits, count how many of the scores were 0.
+ * @param {ArrayList} Scores an ArrayList of the mentioned triplits discribing the compatability of a shift and student.
+ * @returns a number for how many scores were 0.
+ */
+function cnt0Scores(Scores){
+    let cnt0 = 0;
+    for(j = 0; j < Scores.length(); j++){
+        scr = Scores.get(j);
+        scrNum = scr[1];
+        if(scrNum == 0) {
+            cnt0++;
+        }
+        if(scrNum > 0){
+            break;
+        }
+    }
+    return cnt0;
+}
+
 /**
  * Returns a score of compatability between a shift and student.
  * A score is how many 30 min chunks in a shift's schedule and a student's schedule match up.
- * @param {*} Shift 
- * @param {*} Student 
+ * @param {Shift} Shift shift object.
+ * @param {Student} Student student object.
  */
 function scoreCompatability(Shift,Student){
     let score = 0;
@@ -125,9 +202,19 @@ function scoreCompatability(Shift,Student){
     return score;
 }
 
+
+/**
+ * 
+ * -------------------
+ * Sorting Algorithms.
+ * -------------------
+ * 
+ */
+
+
 /**
  * Takes in a list of shifts stored in an ArrayList and sorts them.
- * @param {*} List arrayList object 
+ * @param {ArrayList} List ArrayList object containing shifts.
  */
 function sortShifts(List){
     for(i = 0; i<List.length(); i++){
@@ -148,8 +235,8 @@ function sortShifts(List){
 }
 
 /**
- * 
- * @param {*} Scores 
+ * Sorts a list of [Shift, Score, Student] triplits by score. triplist with smaller scores go first.
+ * @param {ArrayList} Scores an ArrayList of the mentioned triplits discribing the compatability of a shift and student.
  */
 function sortScores(Scores){
     for(j = 0; j < Scores.length(); j++){
@@ -164,8 +251,8 @@ function sortScores(Scores){
 }
 
 /**
- * 
- * @param {*} Map 
+ * Sorts the final mapping/package of relations based on the number of cnt0 in each entry. Samller cnt0s go first.
+ * @param {ArrayList} Map an ArrayList containing [cnt0,[Shift,Score,Student]] entries
  */
 function sortMapping(Map){
     for(j = 0; j < Map.length(); j++){
@@ -179,51 +266,14 @@ function sortMapping(Map){
     }
 }
 
+
 /**
  * 
- * @param {*} List 
- * @param {*} index1 
- * @param {*} index2 
+ * ---------------------------
+ * Tester Function/Debug Call.
+ * ---------------------------
+ * 
  */
-function swap(List,index1,index2){
-    let element1 = List.get(index1);
-    let element2 = List.get(index2);
-    List.remove(index1);
-    List.addAt(index1,element2);
-    List.remove(index2);
-    List.addAt(index2,element1);
-}
-
-/**
- * Given that it's sorted
- * @param {*} Scores 
- * @returns 
- */
-function cnt0Scores(Scores){
-    let cnt0 = 0;
-    for(j = 0; j < Scores.length(); j++){
-        scr = Scores.get(j);
-        scrNum = scr[1];
-        if(scrNum == 0) {
-            cnt0++;
-        }
-        if(scrNum > 0){
-            break;
-        }
-    }
-    return cnt0;
-}
-
-/**
- * Pass in the list, returns the list randomized
- * @param {*} List 
- * @returns 
- */
-// function randomizeList(List){
-//     List.randomize();
-//     return List;
-// }
-
 
 function test(){
     const arrayShifts = new ArrayList();

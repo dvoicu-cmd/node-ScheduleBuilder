@@ -1,45 +1,21 @@
 /**
- * This javascript file exports a student object to the the ./main.js script
+ * This javascript defines a student object.
  * Properties:
- *  - @param maxHour is a positive integer depicting the maximum number of hours a student can take on for a work week
- *  - @param _name is a String that contains the name of the student
- *  - @param _hours is an integer depicting the number of hours a student is working
- *  - @param _assignedShifts is a list of Shift objects pointing to the shifts the student has assigned
- *  - @param _avalability is a Schedule object that depicts the time the student is available
- *  - @param _preference is a Schedule object that depicts when a student prefers to work
+ *  - @param maxHour a positive integer depicting the maximum number of hours a student can take on for a work week.
+ *  - @param _name a String that contains the name of the student.
+ *  - @param _hours an integer depicting the number of hours a student is working in a week. Default is 0.
+ *  - @param _assignedShifts a list of Shift objects pointing to the shifts the student has assigned. Defualt is an empty array []
+ *  - @param _avalability a list of 5 Schedule object that depicts the time the student is available. Default is 5 default schedule objects in an array.
+ *  - @param _preference a list of 5 Schedule object that depicts when a student prefers to work. Default is 5 default schedule objects in an array.
  */
 
 class Student {
 
     static maxHour = 15;
 
-    /*
-     * The following are object constructors
-     */
-
     /**
-     * Constructor method with the following input paramaters.
-     * @param {*} name A string containing the student's name
-     * @param {*} avalability An array of 5 schedule object containing time frames when the student is available
-     * @param {*} preference  An array of 5 schedule objects containing time frames when the student would like to work
-     */
-    // constructor(name,avalability,preference){
-    //     this._name = name;
-    //     this._hours = 0;
-    //     this._assignedShifts = [];
-    //     if(avalability instanceof Array && preference.length == 5){
-    //         this._avalability = avalability;
-    //     }
-    //     else throw SyntaxError;
-    //     if(preference instanceof Array && preference.length == 5){
-    //         this._preference = preference;
-    //     }
-    //     else throw SyntaxError;
-    // }
-
-    /**
-     * Constructor method with only one input paramater.
-     * @param {*} name 
+     * Constructor method.
+     * @param {String} name the name of the student.
      */
     constructor(name){
         this._name = name;
@@ -49,30 +25,30 @@ class Student {
         this._preference = generateListOfSchedules();
     }
 
-    /*
-     * The following are getter methods
+    /**
+     * Gets the name of the student.
      */
     get name(){
         return this._name;
     }
+    /**
+     * Gets the hours a student is working in a week.
+     */
     get hours(){
         return this._hours;
     }
-    get avalability(){
-        return this._avalability;
-    }
-    get preference(){
-        return this._preference;
-    }
 
-    //WIP not even sure if these are needed.
+    /**
+     * Adds a shift to the list of shifts a student it taking on.
+     * @param {Shift} shift The shift being added.
+     */
     assignShift(shift){
-        this._assignedStudents.push(student);
+        this._assignedStudents.push(shift);
     }
 
     /**
-     * Gets a schedule object of a student on a specified date
-     * @param {"Mon","Tue","Wed","Thr","Fri"} date 
+     * Gets a Schedule object of a student on a specified date.
+     * @param {"Mon","Tue","Wed","Thr","Fri"} date a String specifiying the date.
      */
     avalabilityAt(date){
         switch(date){
@@ -91,6 +67,10 @@ class Student {
         }
     }
 
+    /**
+     * Removes a Shift object from the assigned shifts of a student.
+     * @param {Shift} shift the shift to be removed.
+     */
     unassignShift(shift){
         indexOf = this._assignedStudents.indexOf(shift);
         prt1 = this._assignedStudents.splice(0,indexOf);
@@ -100,7 +80,7 @@ class Student {
     }
 
     /**
-     * A method to reduce the time when a student is available 
+     * Reduces the time when a student is available 
      * @param {*} date a one of the strings: "Mon","Tue","Wed","Thr","Fri"
      * @param {*} timeFrom one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select a starting interval to crop availability.
      * @param {*} timeTo one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select an ending interval to crop availability.
@@ -131,7 +111,7 @@ class Student {
     }
 
     /**
-     * A method used to reduce the set of time for when a student wants to work
+     * Reduces the set of time for when a student wants to work
      * @param {*} date a number from 0 to 4 that is used to select a particular schedule for a day of the week.
      * @param {*} timeFrom one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select a starting interval to crop availability.
      * @param {*} timeTo one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select an ending interval to crop availability.
