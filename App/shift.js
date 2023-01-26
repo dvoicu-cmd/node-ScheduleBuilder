@@ -1,9 +1,11 @@
 /**
- * This javascript file exports a shift object to the the ./main.js script
+ * This javascript file defines a Shift object.
+ * A Shift has the following properties
  * Properties:
- *  - @param _type contains a String stating what type of shift the instance is.
- *  - @param _shiftTime contains a Schedule object that contains the time interval of the shift. By defualt the shift time is from 8.5 to 21.
- *  - @param _assignedStudents is an array containing Student objects that are assigned to the instance of the shift object.
+ *  - @param _type a String stating what type/name of shift the instance is.
+ *  - @param _shiftTime a Schedule object that contains the time interval of the shift. By defualt the shift time is from 8.5 to 21.
+ *  - @param _shiftDate a String in the form: Mon, Tue, Wed, Thr, Fri that represent the date the shift takes place. The default is Mon
+ *  - @param _assignedStudents is an array containing the pointers to Student objects that are assigned to the instance of the shift object.
  *  - @param _hasStudent is a boolean value stating whether or not the shift has a student assigned to it.
  * 
  * How the methods work:
@@ -23,18 +25,24 @@ class Shift{
         this._hasStudent = false;
     }
 
+    /**
+     * Returns the schedule object for the shift's time
+     */
     get shiftTime(){
         return this._shiftTime;
     }
 
+    /**
+     * Returns the date of the shift
+     */
     get shiftDate(){
         return this._shiftDate;
     }
 
     /**
-     * Sets the time frame of the shift.
-     * @param {*} from 
-     * @param {*} to 
+     * Sets the time frame of when the shift occurs in a work week.
+     * @param {8.5, 9.0, 9.5, ..., 21.0} from The starting interval of the shift.
+     * @param {8.5, 9.0, 9.5, ..., 21.0} to The ending interval of the shift.
      */
     setTime(from,to){
         this._shiftTime.subSection(from,to);
@@ -43,6 +51,7 @@ class Shift{
     /**
      * Sets the date in which the shift takes place
      * Preconditions: Must be a string of the following values: "Mon", "Tue", "Wed", "Thu", "Fri"
+     * @param {"Mon", "Tue", "Wed", "Thu", "Fri"} date The date to be set.
      */
     setDate(date){
         this._shiftDate = date;
@@ -53,7 +62,7 @@ class Shift{
      * @param {*} student 
      */
     selectStudent(student){
-        //If there are no students intially, change the property.
+        //If there are no students intially, change the property for havving a student.
         if(this._assignedStudents.length > 0){
             this._hasStudent = true;
         }
@@ -64,10 +73,10 @@ class Shift{
 
     /**
      * Removes a student from a shift
-     * @param {*} student the specified student
+     * @param {Student} student The specified student to be removed.
      */
     removeStudent(student){
-        //Remove the specified student by spliting the array in two parts. (Should have used an arrayList)
+        //Remove the specified student by spliting the array in two parts.
         indexOf = this._assignedStudents.indexOf(student);
         prt1 = this._assignedStudents.splice(0,indexOf);
         prt2 = this._assignedStudents;
@@ -82,7 +91,9 @@ class Shift{
     }
 
     /**
-     * Compares the dates of another shift obj. Returns true if the date of this shift is earlier in the week than the other shift or starts on the same day of the other shift. Returns false otherwise.
+     * Compares the dates of another Shift obj. 
+     * @param {Shift} otherShift The other Shift object.
+     * @returns 0 if the shifts are on the same day, 1 if the other shift is Earlier than this shift, -1 there is incorrect syntax of the shiftDate property in the other shift.
      */
     isEarlierInWeekThan(otherShift){
         let orderOfDates = ["Mon","Tue","Wed","Thr","Fri"] //For the computer to understand, this is the order of dates.
@@ -96,7 +107,7 @@ class Shift{
         if(otherIndex == -1){ //If element not found, ie: in proper syntax of strings, return false
             return -1
         }
-        else if(otherIndex>thisIndex){
+        else if(otherIndex > thisIndex){
             return 1
         }
         else if(otherIndex == thisIndex){
@@ -105,7 +116,9 @@ class Shift{
     }
     
     /**
-     * Compares the start times of another shift obj. Returns true if this shift starts ealier than the other shift. returns false otherwise.
+     * Compares the start times of another shift obj.
+     * @param {Shift} otherShift The other Shift object.
+     * @returns true if this shift starts ealier than the other shift. false otherwise.
      */
     startsEarlierThan(otherShift){
         let otherStart = otherShift.shiftTime.selectedTime[0];
@@ -118,11 +131,18 @@ class Shift{
 
     /**
      * Compares two shift objects. If there is any overlap in schedule objects then the function returns the overlap in an array.
+     * @param otherShift The other Shift object.
      */
-    conflict(){
-        //To be done later. Mostly for GUI elements
+    conflict(otherShift){
+        //To be done later. Mostly for GUI elements.
     }
     
+    /**
+     * Determins if two shifts are equal to each other.
+     * A shift is equal to another shift if they share their Schedule objects are equal and if they share the same date.
+     * @param {Shift} otherShift the other Shift object.
+     * @returns true if the shiftDate and Schedule is the same for both objects.
+     */
     equals(otherShift){
         if(this.shiftDate !== otherShift.shiftDate){
             return false;
