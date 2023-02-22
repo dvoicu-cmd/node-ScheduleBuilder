@@ -153,4 +153,8 @@ class Shift{
         else return false;
     }
 
+    num30MinChunks(){
+        return this._shiftTime.num30MinChunks();
+    }
+
 }

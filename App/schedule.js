@@ -125,6 +125,15 @@ class Schedule {
         return isEqual;
     }
 
+    /**
+     * Returns the number of 30 chunks in a schedule
+     * @returns length of _selectedTime.
+     */
+    num30MinChunks(){
+        return this._selectedTime.length;
+    }
+
+
 }
 
 /**     

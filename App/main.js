@@ -127,13 +127,23 @@ function randomScore(shifts,students){
     //Sort
     sortMapping(Mapping);
 
-    console.log(Mapping);
+    //Returns
+    return Mapping;
 }
 
 
 function setAssignmentsRandom(Mapping){
+    let stackList = new ArrayList();
     for(i = 0; i<Mapping.length(); i++){//For each entry in a mapping
+        stack = new Stack(); //Init a stack corrolated to the shift
+        stackList.add(stack);
+    }
 
+    for(i = 0; i<Mapping.length(); i++){
+        mappingEntry = Mapping.get(i).get(1);
+        for(j = 0; j<mappingEntry.length(); j++){
+
+        }
     }
 }
 
@@ -418,24 +428,25 @@ function test(){
     // console.log(sftEqu1.equals(sftNon));
 
 
-    
+    console.log(sft.num30MinChunks());
 
     console.log("Starting computation");
     let mapping = randomScore(arrayShifts,arrayStudents);
     console.log(mapping);
+    console.log(arrayShifts);
 
 
     /**
      * Testing stack data type
      */
 
-    let s = new Stack();
-    s.push(Dan);
-    console.log(s.size());
-    console.log(s.peak());
-    console.log(s.pop());
-    console.log(s.peak());
-    console.log(s.size());
+    // let s = new Stack();
+    // s.push(Dan);
+    // console.log(s.size());
+    // console.log(s.peak());
+    // console.log(s.pop());
+    // console.log(s.peak());
+    // console.log(s.size());
 
     // /**
     //  * Testing comparisions
