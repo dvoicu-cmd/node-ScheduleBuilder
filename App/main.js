@@ -55,7 +55,7 @@ function randomizeList(List){
 /**
  * 
  * ---------------------------------
- * Main assesment/scoring algorithm.
+ * Main assesment/scoring algorithms.
  * ---------------------------------
  * 
  */
@@ -130,6 +130,23 @@ function randomScore(shifts,students){
     console.log(Mapping);
 }
 
+
+function setAssignmentsRandom(Mapping){
+    for(i = 0; i<Mapping.length(); i++){//For each entry in a mapping
+
+    }
+}
+
+function setAssignmentsPreferences(){
+
+}
+
+/**
+ * Resets all assignments of students and shifts
+ */
+function resetAssignments(){
+
+}
 
 /**
  * 
@@ -408,6 +425,17 @@ function test(){
     console.log(mapping);
 
 
+    /**
+     * Testing stack data type
+     */
+
+    let s = new Stack();
+    s.push(Dan);
+    console.log(s.size());
+    console.log(s.peak());
+    console.log(s.pop());
+    console.log(s.peak());
+    console.log(s.size());
 
     // /**
     //  * Testing comparisions
