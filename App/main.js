@@ -116,9 +116,10 @@ function randomScore(shifts,students){
         sortScores(scoresWithThisShift);
         //Now that the scores are sorted, count how many 0s
         let cnt0 = cnt0Scores(scoresWithThisShift);
-        //Then create the array [count of 0s, {scoresWithThisShift}]
+        //Then create the array [count of 0s, the shift in question, {scoresWithThisShift}]
         let addToMapping = initList();
         addToMapping.add(cnt0);
+        addToMapping.add(shifts.get(l));
         addToMapping.add(scoresWithThisShift);
         //Add to the mapping
         Mapping.add(addToMapping);
@@ -139,10 +140,13 @@ function setAssignmentsRandom(Mapping){
         stackList.add(stack);
     }
 
-    for(i = 0; i<Mapping.length(); i++){
-        mappingEntry = Mapping.get(i).get(1);
-        for(j = 0; j<mappingEntry.length(); j++){
-
+    for(i = 0; i<Mapping.length(); i++){ //For each entry in a mapping
+        mappingEntry = Mapping.get(i).get(1); //isolate the specific data we need.
+        for(j = 0; j<mappingEntry.length(); j++){ //For the relations assosiated to that shift.
+            let relations = mappingEntry.get(2);
+            for(k = 1; k<mappingEntry.get(1).getNum30MinChunks(); k++){ //Find all the possible scores, excluding 0 scores
+                relations.get()
+            }
         }
     }
 }
@@ -228,6 +232,56 @@ function scoreCompatability(Shift,Student){
     }
     return score;
 }
+
+function relationWithScore(score, Shift, Mapping){
+    //First, find the index of the relations for the specified shift
+    let shiftEntry = undefined;
+    for(p = 0; p<Mapping.length(); p++){
+        Entry = Mapping.get(p).get(1);
+        if(Shift.equals(Entry)){
+            shiftEntry = Mapping.get(p).get(2);
+            break;
+        }
+    }
+
+    if(shiftEntry == undefined){ //If nothing was found, that means the shift that was entered was not in the Mapping, return undefined.
+        return undefined;
+    }
+    else{
+        let relationsWithScore = initList();
+        for(p = 0; p<shiftEntry.length(); p++){
+            let specificRelation = shiftEntry.get(p); //Get the specific shift,score,student relationship we are analyzing.
+            let scoreOfRelation = specificRelation.at(1); //I forgot, these are arrays... Not sure if I should try to change them.
+            if(scoreOfRelation == score){
+                relationsWithScore.add(specificRelation.at(2));
+            }
+        }
+        return relationsWithScore;
+    }
+
+}
+
+
+/**
+ * 
+ * ---------------------------------------------------
+ * Helper Functions for Getting Properties of Mappings
+ * ---------------------------------------------------
+ * 
+ */
+
+function allRelationsOfShift(specificShift, Mapping){
+
+}
+
+function bestStudentsForShift(specificShift, Mapping){
+
+}
+
+function worstStudentsForShift(specificShift, Mapping){
+
+}
+
 
 
 /**
@@ -428,12 +482,15 @@ function test(){
     // console.log(sftEqu1.equals(sftNon));
 
 
-    console.log(sft.num30MinChunks());
+    console.log(sft.getNum30MinChunks());
 
     console.log("Starting computation");
     let mapping = randomScore(arrayShifts,arrayStudents);
     console.log(mapping);
     console.log(arrayShifts);
+
+    let output = relationWithScore(0,sft,mapping);
+    console.log(output);
 
 
     /**
