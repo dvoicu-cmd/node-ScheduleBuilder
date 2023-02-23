@@ -11,7 +11,7 @@
 
 class Student {
 
-    static maxHour = 15;
+    static hourCap = 15;
 
     /**
      * Constructor method.
@@ -43,7 +43,19 @@ class Student {
      * @param {Shift} shift The shift being added.
      */
     assignShift(shift){
-        this._assignedStudents.push(shift);
+        this._assignedShifts.push(shift);
+    }
+
+    /**
+     * Removes a Shift object from the assigned shifts of a student.
+     * @param {Shift} shift the shift to be removed.
+     */
+    unassignShift(shift){
+        indexOf = this._assignedStudents.indexOf(shift);
+        prt1 = this._assignedStudents.splice(0,indexOf);
+        prt2 = this._assignedStudents;
+        prt1.pop();
+        this._assignedStudents = prt1.concat(prt2);
     }
 
     /**
@@ -65,18 +77,6 @@ class Student {
             default:
                 console.log("No valid input for avalabilityAt(date) method");
         }
-    }
-
-    /**
-     * Removes a Shift object from the assigned shifts of a student.
-     * @param {Shift} shift the shift to be removed.
-     */
-    unassignShift(shift){
-        indexOf = this._assignedStudents.indexOf(shift);
-        prt1 = this._assignedStudents.splice(0,indexOf);
-        prt2 = this._assignedStudents;
-        prt1.pop();
-        this._assignedStudents = prt1.concat(prt2);
     }
 
     /**
@@ -142,10 +142,33 @@ class Student {
      */
     addHours(n){
         this._hours = this._hours + n;
-        if(this.hours > hourCap){
-            console.log(this._name + " is over over the hour cap of: " + hourCap);
+        if(this.hours > this.hourCap){
+            console.log(this._name + " is over over the hour cap of: " + this.hourCap);
         }
     }
+
+    /**
+     * States if the student has max hours
+     */
+    atMaxHours(){
+        if(this.hours >= this.hourCap){
+            return true;
+        }
+        else return false;
+    }
+
+    assignedShifts(){
+        let outputCpy = new ArrayList();
+        for(let i = 0; i<this._assignedShifts; i++){
+            outputCpy.add(this._assignedShifts.at(i));
+        }
+        return outputCpy;
+    }
+
+    changeHourCap(n){
+        this.hourCap = n;
+    }
+    
 }
 
 /**

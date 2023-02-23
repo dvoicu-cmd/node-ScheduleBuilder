@@ -132,9 +132,13 @@ function randomScore(shifts,students){
     return Mapping;
 }
 
-
+/**
+ * Given a mapping, the mapping will assign the best possible student to each shift.
+ * @param {ArrayList} Mapping 
+ */
 function setAssignmentsRandom(Mapping){
-    let stackList = new ArrayList();
+    let stackList = initList();
+    let orderOfShift = initList();
     for(i = 0; i<Mapping.length(); i++){//For each entry in a mapping
         stack = new Stack(); //Init a stack corrolated to the shift
         stackList.add(stack);
@@ -147,6 +151,8 @@ function setAssignmentsRandom(Mapping){
         let thisRelation = Mapping.get(i); //Get the specific [cnt0, shift, {Relations}] entry.
         let thisShift = thisRelation.get(1); //Get the specific shift
 
+        orderOfShift.add(thisShift); //Add this shift to the list of shifts. We will needed for assigning shifts.
+
         for(j = 1; j<=thisShift.getNum30MinChunks(); j++){ //For each possible score of a shift, score, student relationship (including the very last score)
             studentList = relationWithScore(j,thisShift,Mapping); //Get the list of students that corrolate to a specific score.
             studentList.randomize(); //Randomize the list of students with that particular score.
@@ -156,9 +162,33 @@ function setAssignmentsRandom(Mapping){
             }
         }
     }
-    console.log(stackList);
+
+    //Now that we have the stacks ordered: lets assign.
+    for(let i = 0; i<orderOfShift.length(); i++){
+        let thisShift = orderOfShift.get(i); //Shift in question
+        let thisStack = stackList.get(i); //Stack of students that can take the shift.
+
+        //The student at the top of the stack is the most compatable with the shift. But that student can be at max hours.
+        for(let j=0; j<=thisStack.size(); j++){
+
+            studentToAssign = thisStack.pop();
+
+            if(!(studentToAssign.atMaxHours())){ //If student is not at max hours. give them the shift
+                assign(thisShift,studentToAssign);
+                break;
+            }
+            
+            if(studentToAssign == undefined){
+                console.log(thisShift);
+                console.log("The above shift can't get a student assigned");
+            }
+        }
+    }
 }
 
+/**
+ * 
+ */
 function setAssignmentsPreferences(){
 
 }
@@ -277,11 +307,24 @@ function relationWithScore(score, Shift, Mapping){
 }
 
 
+function assign(shift, student){
+    shift.selectStudent(student);
+    student.assignShift(shift);
+    student.addHours(shift.getNum30MinChunks()/2);
+}
+
+function unassign(shift, student){
+    shift.removeStudent(student);
+    student.unassignShift(shift);
+    student.reduceHours(shift.getNum30MinChunks()/2);
+}
+
+
 /**
  * 
- * ---------------------------------------------------
- * Helper Functions for Getting Properties of Mappings
- * ---------------------------------------------------
+ * ------------------------
+ * Helper Functions for GUI
+ * ------------------------
  * 
  */
 
@@ -295,6 +338,30 @@ function bestStudentsForShift(specificShift, Mapping){
 
 function worstStudentsForShift(specificShift, Mapping){
 
+}
+
+function hardestShiftToFill(Mapping){
+
+}
+
+function easiestShiftToFill(Mapping){
+
+}
+
+/**
+ * 
+ * @param {*} Shift 
+ * @returns 
+ */
+function assignedStudentsToShift(Shift){
+    return Shift.assignedStudents();
+}
+
+/**
+ * Gets the shifts that are assigned to a student
+ */
+function assignedShiftsToStudent(Student){
+    return Student.assignedShifts();
 }
 
 
@@ -495,6 +562,7 @@ function test(){
 
     // console.log(sftEqu1.equals(sftEqu2));
     // console.log(sftEqu1.equals(sftNon));
+
 
     console.log("Starting computation");
     let mapping = randomScore(arrayShifts,arrayStudents);

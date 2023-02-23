@@ -62,13 +62,12 @@ class Shift{
      * @param {*} student 
      */
     selectStudent(student){
-        //If there are no students intially, change the property for havving a student.
-        if(this._assignedStudents.length > 0){
+        //If there are no students intially, change the property for having a student.
+        if(this._assignedStudents.length <= 0){
             this._hasStudent = true;
         }
         //Assign.
         this._assignedStudents.push(student);
-        student.assignShift(this);
     }
 
     /**
@@ -88,6 +87,14 @@ class Shift{
         if(this._assignedStudents.length <= 0){
             this._hasStudent = false;
         }
+    }
+
+    assignedStudents(){
+        outputCpy = new ArrayList();
+        for(let i=0; i<this._assignedStudents; i++){
+            outputCpy.add(this._assignedStudents.at(i));
+        }
+        return outputCpy;
     }
 
     /**
@@ -153,6 +160,10 @@ class Shift{
         else return false;
     }
 
+    /**
+     * Returns how many 30min chunks
+     * @returns The number of elements in the shift's schedule object.
+     */
     getNum30MinChunks(){
         return this._shiftTime.num30MinChunks();
     }
