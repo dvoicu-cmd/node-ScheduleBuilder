@@ -141,14 +141,22 @@ function setAssignmentsRandom(Mapping){
     }
 
     for(i = 0; i<Mapping.length(); i++){ //For each entry in a mapping
-        mappingEntry = Mapping.get(i).get(1); //isolate the specific data we need.
-        for(j = 0; j<mappingEntry.length(); j++){ //For the relations assosiated to that shift.
-            let relations = mappingEntry.get(2);
-            for(k = 1; k<mappingEntry.get(1).getNum30MinChunks(); k++){ //Find all the possible scores, excluding 0 scores
-                relations.get()
+
+        let corospondingStack = stackList.get(i); //Address the corrosponding stack of students to it's respective shift.
+        let studentList = initList(); //Init where you will store the students
+        let thisRelation = Mapping.get(i); //Get the specific [cnt0, shift, {Relations}] entry.
+        let thisShift = thisRelation.get(1); //Get the specific shift
+
+        for(j = 1; j<=thisShift.getNum30MinChunks(); j++){ //For each possible score of a shift, score, student relationship (including the very last score)
+            studentList = relationWithScore(j,thisShift,Mapping); //Get the list of students that corrolate to a specific score.
+            studentList.randomize(); //Randomize the list of students with that particular score.
+            
+            for(k = 0; k<studentList.length(); k++){ 
+                corospondingStack.push(studentList.get(k)); //Then add each student to the corrosponding stack, one by one.
             }
         }
     }
+    console.log(stackList);
 }
 
 function setAssignmentsPreferences(){
@@ -233,6 +241,13 @@ function scoreCompatability(Shift,Student){
     return score;
 }
 
+/**
+ * Finds and returns an ArrayList of students that corrolate to a specified shift and score.
+ * @param {*} score A specific score.
+ * @param {*} Shift A specific shift obj
+ * @param {*} Mapping an Mapping that was computed.
+ * @returns an arrrayList of students
+ */
 function relationWithScore(score, Shift, Mapping){
     //First, find the index of the relations for the specified shift
     let shiftEntry = undefined;
@@ -256,7 +271,7 @@ function relationWithScore(score, Shift, Mapping){
                 relationsWithScore.add(specificRelation.at(2));
             }
         }
-        return relationsWithScore;
+        return relationsWithScore; //Return the found students.
     }
 
 }
@@ -481,16 +496,12 @@ function test(){
     // console.log(sftEqu1.equals(sftEqu2));
     // console.log(sftEqu1.equals(sftNon));
 
-
-    console.log(sft.getNum30MinChunks());
-
     console.log("Starting computation");
     let mapping = randomScore(arrayShifts,arrayStudents);
     console.log(mapping);
     console.log(arrayShifts);
 
-    let output = relationWithScore(0,sft,mapping);
-    console.log(output);
+    setAssignmentsRandom(mapping);
 
 
     /**

@@ -116,8 +116,8 @@ class Schedule {
             }
         }
 
-        for(i = 0; i < this.selectedTime.length; i++){
-            if(this.selectedTime[i] !== otherSchedule.selectedTime[i]){
+        for(let m = 0; m < this.selectedTime.length; m++){
+            if(this.selectedTime[m] !== otherSchedule.selectedTime[m]){
                 isEqual = false;
                 return isEqual
             }
