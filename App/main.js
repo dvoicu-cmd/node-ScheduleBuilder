@@ -565,11 +565,26 @@ function test(){
 
 
     console.log("Starting computation");
-    let mapping = randomScore(arrayShifts,arrayStudents);
-    console.log(mapping);
-    console.log(arrayShifts);
+    console.log(Dan.hourCap);
 
+    Dan.reduceAvailability("Mon",8.5,18.5);
+    Baran.reduceAvailability("Mon",8.5,18.5);
+    Justin.reduceAvailability("Mon",8.5,18.5);
+    Sara.reduceAvailability("Mon",8.5,18.5);
+
+    sftMon = new Shift();
+    sftMon.setDate("Mon");
+    sftMon.setTime(8.5,18.5);
+
+    arrayShifts.add(sftMon);
+
+    let mapping = randomScore(arrayShifts,arrayStudents);
     setAssignmentsRandom(mapping);
+    Dan.changeHourCap(25);
+    console.log(arrayShifts);
+    console.log(arrayStudents);
+    console.log("end")
+
 
 
     /**

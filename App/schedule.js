@@ -106,7 +106,7 @@ class Schedule {
      * @returns true if Objects are equal, false otherwise.
      */
     equal(otherSchedule){
-        otherSchedule.selectedTime;
+        let otherSelectedTime = otherSchedule.selectedTime;
         let isEqual = true;
 
         if(this.selectedTime.length == 0){
@@ -116,12 +116,18 @@ class Schedule {
             }
         }
 
-        for(let m = 0; m < this.selectedTime.length; m++){
-            if(this.selectedTime[m] !== otherSchedule.selectedTime[m]){
-                isEqual = false;
-                return isEqual
+        if(this.selectedTime.length == otherSelectedTime.length){
+            for(let m = 0; m < this.selectedTime.length; m++){
+                if(this.selectedTime[m] !== otherSchedule.selectedTime[m]){
+                    isEqual = false;
+                    return isEqual
+                }
             }
         }
+        else{
+            isEqual = false;
+        }
+
         return isEqual;
     }
 

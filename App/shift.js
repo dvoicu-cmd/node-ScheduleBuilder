@@ -21,7 +21,7 @@ class Shift{
         this._type = type;
         this._shiftTime = new Schedule();
         this._shiftDate = "Mon";
-        this._assignedStudents = [];
+        this._assignedStudents = new ArrayList();
         this._hasStudent = false;
     }
 
@@ -63,11 +63,11 @@ class Shift{
      */
     selectStudent(student){
         //If there are no students intially, change the property for having a student.
-        if(this._assignedStudents.length <= 0){
+        if(this._assignedStudents.length() <= 0){
             this._hasStudent = true;
         }
         //Assign.
-        this._assignedStudents.push(student);
+        this._assignedStudents.add(student);
     }
 
     /**
@@ -76,15 +76,10 @@ class Shift{
      */
     removeStudent(student){
         //Remove the specified student by spliting the array in two parts.
-        indexOf = this._assignedStudents.indexOf(student);
-        prt1 = this._assignedStudents.splice(0,indexOf);
-        prt2 = this._assignedStudents;
-        prt1.pop();
-        this._assignedStudents = prt1.concat(prt2);
-        student.unassignShift(this);
+        this._assignedStudents.remove(student);
 
         //If there are no students left after the computation, change the property.
-        if(this._assignedStudents.length <= 0){
+        if(this._assignedStudents.length() <= 0){
             this._hasStudent = false;
         }
     }

@@ -11,18 +11,17 @@
 
 class Student {
 
-    static hourCap = 15;
-
     /**
      * Constructor method.
      * @param {String} name the name of the student.
      */
     constructor(name){
+        this.hourCap = 2; //I tried, I can't get this to be a propertiy shared among all student classes.
         this._name = name;
         this._hours = 0;
-        this._assignedShifts = [];
+        this._assignedShifts = new ArrayList();
         this._avalability = generateListOfSchedules();
-        this._preference = generateListOfSchedules();
+        this._preference = generateListOfSchedules();        
     }
 
     /**
@@ -43,7 +42,7 @@ class Student {
      * @param {Shift} shift The shift being added.
      */
     assignShift(shift){
-        this._assignedShifts.push(shift);
+        this._assignedShifts.add(shift);
     }
 
     /**
@@ -51,11 +50,7 @@ class Student {
      * @param {Shift} shift the shift to be removed.
      */
     unassignShift(shift){
-        indexOf = this._assignedStudents.indexOf(shift);
-        prt1 = this._assignedStudents.splice(0,indexOf);
-        prt2 = this._assignedStudents;
-        prt1.pop();
-        this._assignedStudents = prt1.concat(prt2);
+        this._assignedShifts.remove(shift);
     }
 
     /**
@@ -142,8 +137,8 @@ class Student {
      */
     addHours(n){
         this._hours = this._hours + n;
-        if(this.hours > this.hourCap){
-            console.log(this._name + " is over over the hour cap of: " + this.hourCap);
+        if(this.atMaxHours()){
+            console.log(this._name + " is over/at the hour cap of: " + this.hourCap);
         }
     }
 
