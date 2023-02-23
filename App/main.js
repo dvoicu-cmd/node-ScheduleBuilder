@@ -172,15 +172,19 @@ function setAssignmentsRandom(Mapping){
         for(let j=0; j<=thisStack.size(); j++){
 
             studentToAssign = thisStack.pop();
-
-            if(!(studentToAssign.atMaxHours())){ //If student is not at max hours. give them the shift
+            
+            try{
+                if(!(studentToAssign.atMaxHours())){ //If student is not at max hours. give them the shift
                 assign(thisShift,studentToAssign);
                 break;
+                }
             }
-            
-            if(studentToAssign == undefined){
-                console.log(thisShift);
-                console.log("The above shift can't get a student assigned");
+            catch(error){
+                if(studentToAssign == undefined){
+                    alert(thisShift);
+                    console.log(thisShift);
+                    console.log("The above shift can't get a student assigned");
+                }
             }
         }
     }
