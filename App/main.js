@@ -181,7 +181,6 @@ function setAssignmentsRandom(Mapping){
             }
             catch(error){
                 if(studentToAssign == undefined){
-                    alert(thisShift);
                     console.log(thisShift);
                     console.log("The above shift can't get a student assigned");
                 }
@@ -350,6 +349,25 @@ function hardestShiftToFill(Mapping){
 
 function easiestShiftToFill(Mapping){
 
+}
+
+// Function to download data to a file (Taken from stack over flow by user: Kanchu : https://stackoverflow.com/questions/13405129/create-and-save-a-file-with-javascript/53864791#53864791)
+function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
 }
 
 /**
@@ -576,7 +594,7 @@ function test(){
     Justin.reduceAvailability("Mon",8.5,18.5);
     Sara.reduceAvailability("Mon",8.5,18.5);
 
-    sftMon = new Shift();
+    sftMon = new Shift("WSC");
     sftMon.setDate("Mon");
     sftMon.setTime(8.5,18.5);
 
@@ -585,10 +603,10 @@ function test(){
     let mapping = randomScore(arrayShifts,arrayStudents);
     setAssignmentsRandom(mapping);
     Dan.changeHourCap(25);
-    console.log(arrayShifts);
-    console.log(arrayStudents);
-    console.log("end")
 
+    console.log(Dan.export());
+    console.log(sftMon.export());
+    download(Dan.export(),"aughh.txt",String);
 
 
     /**

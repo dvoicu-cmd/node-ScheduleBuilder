@@ -163,4 +163,11 @@ class Shift{
         return this._shiftTime.num30MinChunks();
     }
 
+    /**
+     * Exports the contents of the string
+     */
+    export(){
+        return "name: "+this._type+"\nshiftDate: "+this._shiftDate+"\nshiftTime: "+this._shiftTime.export();
+    }
+
 }

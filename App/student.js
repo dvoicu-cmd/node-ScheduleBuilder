@@ -163,6 +163,21 @@ class Student {
     changeHourCap(n){
         this.hourCap = n;
     }
+
+    /**
+     * Exports student data into a string
+     */
+    export(){
+        let str = "\n";
+        for(let i = 0; i < this._avalability.length; i++){
+            str = str + i + ")\n";
+            str = str + this._avalability[i].export();
+            str = str + "\n"
+        }
+        str = str + "fi";
+
+        return "name: "+this._name+"\nmaxHours: "+this.hourCap+"\nAvalability:"+ str; 
+    }
     
 }
 
