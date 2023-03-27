@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Table</title>
+</head>
+<body>
+	<h1>Student Table</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Preference of Hours</th>
+			</tr>
+		</thead>
+		<tbody id="student-table">
+			<tr>
+				<td>John Doe</td>
+				<td>Afternoon</td>
+			</tr>
+			<tr>
+				<td>Jane Smith</td>
+				<td>Morning</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Add a Student</h2>
+	<form onsubmit="addStudent(event)">
+		<label for="name">Name:</label>
+		<input type="text" id="name" required>
+		<br>
+		<label for="hours">Preference of Hours:</label>
+		<input type="text" id="hours" required>
+		<br>
+		<button type="submit">Add Student</button>
+	</form>
+
+	<script>
+		function addStudent(event) {
+			event.preventDefault();
+			let name = document.getElementById("name").value;
+			let hours = document.getElementById("hours").value;
+			let table = document.getElementById("student-table");
+			let row = document.createElement("tr");
+			let nameCell = document.createElement("td");
+			let hoursCell = document.createElement("td");
+			nameCell.innerText = name;
+			hoursCell.innerText = hours;
+			row.appendChild(nameCell);
+			row.appendChild(hoursCell);
+			table.appendChild(row);
+			document.getElementById("name").value = "";
+			document.getElementById("hours").value = "";
+		}
+	</script>
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Table</title>
+</head>
+<body>
+	<h1>Student Table</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Preference of Hours</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody id="student-table">
+			<tr>
+				<td>John Doe</td>
+				<td>Afternoon</td>
+				<td><button onclick="editStudent(this)">Edit</button><button onclick="deleteStudent(this)">Delete</button></td>
+			</tr>
+			<tr>
+				<td>Jane Smith</td>
+				<td>Morning</td>
+				<td><button onclick="editStudent(this)">Edit</button><button onclick="deleteStudent(this)">Delete</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Add a Student</h2>
+	<form onsubmit="addOrUpdateStudent(event)">
+		<input type="hidden" id="student-id">
+		<label for="name">Name:</label>
+		<input type="text" id="name" required>
+		<br>
+		<label for="hours">Preference of Hours:</label>
+		<input type="text" id="hours" required>
+		<br>
+		<button type="submit">Add Student</button>
+		<button type="button" onclick="cancelEdit()">Cancel</button>
+	</form>
+
+	<script>
+		let editing = false;
+		let editingRow;
+
+		function addOrUpdateStudent(event) {
+			event.preventDefault();
+			let name = document.getElementById("name").value;
+			let hours = document.getElementById("hours").value;
+			let table = document.getElementById("student-table");
+			if (editing) {
+				editingRow.cells[0].innerText = name;
+				editingRow.cells[1].innerText = hours;
+				editingRow = null;
+				document.getElementById("student-id").value = "";
+				editing = false;
+			} else {
+				let row = table.insertRow();
+				let nameCell = row.insertCell();
+				let hoursCell = row.insertCell();
+				let actionsCell = row.insertCell();
+				nameCell.innerText = name;
+				hoursCell.innerText = hours;
+				actionsCell.innerHTML = '<button onclick="editStudent(this)">Edit</button><button onclick="deleteStudent(this)">Delete</button>';
+			}
+			document.getElementById("name").value = "";
+			document.getElementById("hours").value = "";
+		}
+
+		function editStudent(button) {
+			editingRow = button.parentNode.parentNode;
+			document.getElementById("student-id").value = editingRow.rowIndex;
+			document.getElementById("name").value = editingRow.cells[0].innerText;
+			document.getElementById("hours").value = editingRow.cells[1].innerText;
+			editing = true;
+		}
+
+		function deleteStudent(button) {
+			let row = button.parentNode.parentNode;
+			row.parentNode.removeChild(row);
+		}
+
+		function cancelEdit() {
+			document.getElementById("name").value = "";
+			document.getElementById("hours").value = "";
+			editingRow = null;
+			document.getElementById("student-id").value = "";
+			editing = false;
+		}
+	</script>
+</body>
+</html>
