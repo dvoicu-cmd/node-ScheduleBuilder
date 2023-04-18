@@ -332,23 +332,23 @@ function unassign(shift, student){
  */
 
 function allRelationsOfShift(specificShift, Mapping){
-
+    return relationWithScore(specificShift,Mapping);
 }
 
 function bestStudentsForShift(specificShift, Mapping){
-
+    return relationWithScore(specificShift.getNum30MinChunks(),specificShift,Mapping);
 }
 
 function worstStudentsForShift(specificShift, Mapping){
-
+    return relationWithScore(0,specificShift,Mapping);
 }
 
 function hardestShiftToFill(Mapping){
-
+    return Mapping.get(0);
 }
 
 function easiestShiftToFill(Mapping){
-
+    return Mapping.get(Mapping.size()-1);
 }
 
 // Function to download data to a file (Taken from stack over flow by user: Kanchu : https://stackoverflow.com/questions/13405129/create-and-save-a-file-with-javascript/53864791#53864791)
@@ -604,9 +604,9 @@ function test(){
     setAssignmentsRandom(mapping);
     Dan.changeHourCap(25);
 
-    console.log(Dan.export());
+    console.log(mapping);
+    console.log(worstStudentsForShift(sftMon,mapping));
     console.log(sftMon.export());
-    download(Dan.export(),"aughh.txt",String);
 
 
     /**
