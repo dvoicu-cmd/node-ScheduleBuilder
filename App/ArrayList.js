@@ -1,5 +1,5 @@
 /**
- * A simple ArrayList class.
+ * A simple ArrayList class that mimics the arrayList object in Java.
  */
 class ArrayList {
     constructor(){
@@ -16,7 +16,7 @@ class ArrayList {
 
     /**
      * Adds an element at a specified index.
-     * @param {*} index specified index.
+     * @param {positive integer} index specified index.
      * @param {*} element element to be added.
      */
     addAt(index,element){
@@ -28,7 +28,7 @@ class ArrayList {
 
     /**
      * Removed at element at a specified index and returns it.
-     * @param {*} index the specified index.
+     * @param {positive integer} index the specified index.
      * @returns the element that is removed.
      */
     remove(index){
@@ -48,8 +48,8 @@ class ArrayList {
 
     /**
      * Returns the index of a specified element.
-     * @param {*} element 
-     * @returns 
+     * @param {*} element the specified index.
+     * @returns The element at the specified index.
      */
     indexOf(element){
         return this.ArrayList.indexOf(element);
@@ -65,8 +65,8 @@ class ArrayList {
     }
 
     /**
-     * a method to return the length of the arrayList
-     * @returns The length of the arrayList
+     * a method to return the length of the arrayList.
+     * @returns The length of the arrayList.
      */
     length(){
         return this.ArrayList.length;
