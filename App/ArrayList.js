@@ -87,3 +87,5 @@ class ArrayList {
     }
 
 }
+//Export the class
+module.exports = ArrayList;

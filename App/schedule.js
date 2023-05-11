@@ -164,3 +164,6 @@ function generateHours(){
     }
     return output;
 }
+
+//Export the class
+module.exports = Schedule;

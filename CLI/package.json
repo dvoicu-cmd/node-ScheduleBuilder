@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@inquirer/confirm": "^1.0.3",
     "@inquirer/select": "^1.0.3",
     "chalk": "^5.2.0",
     "chalk-animation": "^2.0.3",
