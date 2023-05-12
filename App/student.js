@@ -9,6 +9,7 @@
  *  - @param _preference a list of 5 Schedule object that depicts when a student prefers to work. Default is 5 default schedule objects in an array.
  */
 
+
 class Student {
 
     /**
@@ -191,3 +192,6 @@ function generateListOfSchedules(){
     }
     return output;
 }
+
+//Export the class
+module.exports = Student;

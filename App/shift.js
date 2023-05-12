@@ -171,3 +171,5 @@ class Shift{
     }
 
 }
+//Export the class
+module.exports = Shift;
