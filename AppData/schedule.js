@@ -49,6 +49,7 @@ class Schedule {
                 while(startIndex == -1){
                     nextBestFrom += 0.5;
                     startIndex = this._selectedTime.indexOf(nextBestFrom);
+                    if(nextBestFrom > 21) return; //Give up if you don't find a number.
                 }
             }
         }
@@ -62,6 +63,7 @@ class Schedule {
                 while(endIndex == -1){
                     nextBestTo -= 0.5;
                     endIndex = this._selectedTime.indexOf(nextBestTo);
+                    if(nextBestTo < 8.5) return; //Give up if you don't find a number.
                 }
             }
         }
@@ -166,4 +168,4 @@ function generateHours(){
 }
 
 //Export the class
-module.exports = Schedule;
+export default Schedule;

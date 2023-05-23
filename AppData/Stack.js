@@ -1,3 +1,4 @@
+import ArrayList from './ArrayList.js';
 /**
  * Stack data type
  */
@@ -49,4 +50,4 @@ class Stack{
 
 }
 //Export the class
-module.exports = Stack;
+export default Stack;

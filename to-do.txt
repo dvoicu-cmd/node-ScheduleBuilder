@@ -1,0 +1,14 @@
+What to do next:
+- Ability to change hour capacities for all students
+- Implement Save features for the following:
+	- Relation Table
+	- Students
+	- Shifts
+
+- Implement Upload features for:
+	- Students
+	- Shifts
+
+- Nice to haves:
+	- Look nicer
+	- Preferences

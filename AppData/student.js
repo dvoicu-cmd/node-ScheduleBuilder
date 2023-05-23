@@ -8,7 +8,9 @@
  *  - @param _avalability a list of 5 Schedule object that depicts the time the student is available. Default is 5 default schedule objects in an array.
  *  - @param _preference a list of 5 Schedule object that depicts when a student prefers to work. Default is 5 default schedule objects in an array.
  */
-
+import ArrayList from './ArrayList.js';
+import Shift from './shift.js';
+import Schedule from './schedule.js';
 
 class Student {
 
@@ -17,7 +19,7 @@ class Student {
      * @param {String} name the name of the student.
      */
     constructor(name){
-        this.hourCap = 2; //I tried, I can't get this to be a propertiy shared among all student classes.
+        this.hourCap = 10; //I tried, I can't get this to be a propertiy shared among all student classes.
         this._name = name;
         this._hours = 0;
         this._assignedShifts = new ArrayList();
@@ -178,8 +180,8 @@ class Student {
         str = str + "fi";
 
         return "name: "+this._name+"\nmaxHours: "+this.hourCap+"\nAvalability:"+ str; 
-    }
-    
+    }    
+
 }
 
 /**
@@ -194,4 +196,4 @@ function generateListOfSchedules(){
 }
 
 //Export the class
-module.exports = Student;
+export default Student;

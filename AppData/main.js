@@ -5,6 +5,18 @@
  * - The randomScore()
  */
 
+/**
+ * 
+ * -----------------
+ * Import statements
+ * -----------------
+ *  
+ */
+
+import ArrayList from './ArrayList.js';
+import Stack from './Stack.js';
+import Shift from './shift.js';
+import Student from './student.js'
 
 /**
  * 
@@ -19,7 +31,7 @@
  * Initializes a new arrayList()
  * @returns a new ArrayList object.
  */
-function initList(){
+export function initList(){
     const List = new ArrayList();
     return List;
 }
@@ -29,7 +41,7 @@ function initList(){
  * @param {ArrayList} List arrayList object.
  * @param {*} Element element to be added.
  */
-function addElement(List,Element){
+export function addElement(List,Element){
     List.add(Element);
 }
 
@@ -39,7 +51,7 @@ function addElement(List,Element){
  * @param {Positive Integer} index a positive integer to select which index the element will be added next to.
  * @param {*} Element element to be added.
  */
-function addElementAt(List,index,Element){
+export function addElementAt(List,index,Element){
     List.addAt(index,Element);
 }
 
@@ -47,7 +59,7 @@ function addElementAt(List,index,Element){
  * Pass in the list, returns the list randomized
  * @param {*} List the ArrayList to be randomized.
  */
-function randomizeList(List){
+export function randomizeList(List){
     List.randomize();
 }
 
@@ -72,11 +84,11 @@ function randomizeList(List){
  * Each entry in the package is sorted by cnt0, from the most cnt0s to the least.
  * cnt0 directly correlates to how difficult the shift will be to cover.
  */
-function randomScore(shifts,students){
+export function randomScore(shifts,students){
 
     //Store the order of students before randomizing
     let tmpStudents = initList();
-    for(i = 0; i<students.length(); i++){
+    for(let i = 0; i<students.length(); i++){
         tmpStudents.add(students.get(i));
     }
 
@@ -86,10 +98,10 @@ function randomScore(shifts,students){
 
     //Then find the scores between shifts and students. Store scores in an array.
     const foundScores = new ArrayList();
-    for(i = 0; i < shifts.length(); i++) { //For each shift
-        shiftCompatability = new ArrayList();
+    for(let i = 0; i < shifts.length(); i++) { //For each shift
+        let shiftCompatability = new ArrayList(); //Uh is this ever used? I'm scared to touch it.
         let sft = shifts.get(i);
-        for(j = 0; j < students.length(); j++) { //For each student
+        for(let j = 0; j < students.length(); j++) { //For each student
             let std = students.get(j);
             let score = scoreCompatability(sft,std);
             const relation = [sft,score,std];
@@ -103,9 +115,9 @@ function randomScore(shifts,students){
 
     //Now sort and compile the mapping in our desired output.    
     let Mapping = initList();
-    for(l = 0; l<shifts.length(); l++) { //For each shift, Note: there is another scope issue here. This must be l and not i. I think this is conflicting with the call of the equals method in line 77.
+    for(let l = 0; l<shifts.length(); l++) { //For each shift, Note: there is another scope issue here. This must be l and not i. I think this is conflicting with the call of the equals method in line 77.
         let scoresWithThisShift = initList();
-        for (j = 0; j < foundScores.length(); j++){ //For each score
+        for (let j = 0; j < foundScores.length(); j++){ //For each score
             let currentScore = foundScores.get(j);
             let specificShift = currentScore[0];
             if(specificShift.equals(shifts.get(l))) { //If the shift of the relation matches with the currently compared to shift, then added to the list.
@@ -136,15 +148,15 @@ function randomScore(shifts,students){
  * Given a mapping, the mapping will assign the best possible student to each shift.
  * @param {ArrayList} Mapping 
  */
-function setAssignmentsRandom(Mapping){
+export function setAssignmentsRandom(Mapping){
     let stackList = initList();
     let orderOfShift = initList();
-    for(i = 0; i<Mapping.length(); i++){//For each entry in a mapping
-        stack = new Stack(); //Init a stack corrolated to the shift
+    for(let i = 0; i<Mapping.length(); i++){//For each entry in a mapping
+        let stack = new Stack(); //Init a stack corrolated to the shift
         stackList.add(stack);
     }
 
-    for(i = 0; i<Mapping.length(); i++){ //For each entry in a mapping
+    for(let i = 0; i<Mapping.length(); i++){ //For each entry in a mapping
 
         let corospondingStack = stackList.get(i); //Address the corrosponding stack of students to it's respective shift.
         let studentList = initList(); //Init where you will store the students
@@ -153,11 +165,11 @@ function setAssignmentsRandom(Mapping){
 
         orderOfShift.add(thisShift); //Add this shift to the list of shifts. We will needed for assigning shifts.
 
-        for(j = 1; j<=thisShift.getNum30MinChunks(); j++){ //For each possible score of a shift, score, student relationship (including the very last score)
+        for(let j = 1; j<=thisShift.getNum30MinChunks(); j++){ //For each possible score of a shift, score, student relationship (including the very last score)
             studentList = relationWithScore(j,thisShift,Mapping); //Get the list of students that corrolate to a specific score.
             studentList.randomize(); //Randomize the list of students with that particular score.
             
-            for(k = 0; k<studentList.length(); k++){ 
+            for(let k = 0; k<studentList.length(); k++){ 
                 corospondingStack.push(studentList.get(k)); //Then add each student to the corrosponding stack, one by one.
             }
         }
@@ -171,7 +183,7 @@ function setAssignmentsRandom(Mapping){
         //The student at the top of the stack is the most compatable with the shift. But that student can be at max hours.
         for(let j=0; j<=thisStack.size(); j++){
 
-            studentToAssign = thisStack.pop();
+            let studentToAssign = thisStack.pop();
             
             try{
                 if(!(studentToAssign.atMaxHours())){ //If student is not at max hours. give them the shift
@@ -189,19 +201,7 @@ function setAssignmentsRandom(Mapping){
     }
 }
 
-/**
- * 
- */
-function setAssignmentsPreferences(){
 
-}
-
-/**
- * Resets all assignments of students and shifts
- */
-function resetAssignments(){
-
-}
 
 /**
  * 
@@ -234,9 +234,9 @@ function swap(List,index1,index2){
  */
 function cnt0Scores(Scores){
     let cnt0 = 0;
-    for(j = 0; j < Scores.length(); j++){
-        scr = Scores.get(j);
-        scrNum = scr[1];
+    for(let j = 0; j < Scores.length(); j++){
+        let scr = Scores.get(j);
+        let scrNum = scr[1];
         if(scrNum == 0) {
             cnt0++;
         }
@@ -264,7 +264,7 @@ function scoreCompatability(Shift,Student){
     }
 
     //This must be k because there is a conflicting scope in the randomScore() method. If this is i, i in the randomScore() method will always be set to 3 due to this function always being called.
-    for(k = 0; k<sftSchedule.selectedTime.length; k++){
+    for(let k = 0; k<sftSchedule.selectedTime.length; k++){
         let chunkSft = sftSchedule.selectedTime.at(k);
         let existsAt = stdSchedule.selectedTime.indexOf(chunkSft);
         if(existsAt >= 0){
@@ -284,8 +284,8 @@ function scoreCompatability(Shift,Student){
 function relationWithScore(score, Shift, Mapping){
     //First, find the index of the relations for the specified shift
     let shiftEntry = undefined;
-    for(p = 0; p<Mapping.length(); p++){
-        Entry = Mapping.get(p).get(1);
+    for(let p = 0; p<Mapping.length(); p++){
+        let Entry = Mapping.get(p).get(1);
         if(Shift.equals(Entry)){
             shiftEntry = Mapping.get(p).get(2);
             break;
@@ -297,7 +297,7 @@ function relationWithScore(score, Shift, Mapping){
     }
     else{
         let relationsWithScore = initList();
-        for(p = 0; p<shiftEntry.length(); p++){
+        for(let p = 0; p<shiftEntry.length(); p++){
             let specificRelation = shiftEntry.get(p); //Get the specific shift,score,student relationship we are analyzing.
             let scoreOfRelation = specificRelation.at(1); //I forgot, these are arrays... Not sure if I should try to change them.
             if(scoreOfRelation == score){
@@ -331,23 +331,23 @@ function unassign(shift, student){
  * 
  */
 
-function allRelationsOfShift(specificShift, Mapping){
+export function allRelationsOfShift(specificShift, Mapping){
     return relationWithScore(specificShift,Mapping);
 }
 
-function bestStudentsForShift(specificShift, Mapping){
+export function bestStudentsForShift(specificShift, Mapping){
     return relationWithScore(specificShift.getNum30MinChunks(),specificShift,Mapping);
 }
 
-function worstStudentsForShift(specificShift, Mapping){
+export function worstStudentsForShift(specificShift, Mapping){
     return relationWithScore(0,specificShift,Mapping);
 }
 
-function hardestShiftToFill(Mapping){
+export function hardestShiftToFill(Mapping){
     return Mapping.get(0);
 }
 
-function easiestShiftToFill(Mapping){
+export function easiestShiftToFill(Mapping){
     return Mapping.get(Mapping.size()-1);
 }
 
@@ -375,18 +375,40 @@ function download(data, filename, type) {
  * @param {*} Shift 
  * @returns 
  */
-function assignedStudentsToShift(Shift){
+export function assignedStudentsToShift(Shift){
     return Shift.assignedStudents();
 }
 
 /**
  * Gets the shifts that are assigned to a student
  */
-function assignedShiftsToStudent(Student){
+export function assignedShiftsToStudent(Student){
     return Student.assignedShifts();
 }
 
+/**
+ * Resets all assignments of students and shifts
+ */
+export function resetAssignments(listSft, listStd){
+    let lenSft = listSft.length();
+    let lenStd = listStd.length();
+    for(let i = 0; i<lenSft; i++){
+        let sft = listSft.get(i);
+        let stds = assignedStudentsToShift(sft);
+        for(let j = 0; j<stds.length(); j++){
+            unassign(sft,stds.get(j));
+        }
+    }
 
+    //Redundant, but it is just incase something is missed in the first set of loops.
+    for(let i = 0; i<lenStd; i++){
+        let std = listStd.get(i);
+        let sfts = assignedShiftsToStudent(std);
+        for(let j = 0; j<sfts.length(); j++){
+            unassign(sfts.get(j),std);
+        }
+    }
+}
 
 /**
  * 
@@ -401,11 +423,11 @@ function assignedShiftsToStudent(Student){
  * Takes in a list of shifts stored in an ArrayList and sorts them.
  * @param {ArrayList} List ArrayList object containing shifts.
  */
-function sortShifts(List){
-    for(i = 0; i<List.length(); i++){
-        for(j = i; j<List.length(); j++){
-            sft1 = List.get(i);
-            sft2 = List.get(j);
+export function sortShifts(List){
+    for(let i = 0; i<List.length(); i++){
+        for(let j = i; j<List.length(); j++){
+            let sft1 = List.get(i);
+            let sft2 = List.get(j);
             if(sft2.isEarlierInWeekThan(sft1) == 1){
                     swap(List,i,j);
             }
@@ -424,8 +446,8 @@ function sortShifts(List){
  * @param {ArrayList} Scores an ArrayList of the mentioned triplits discribing the compatability of a shift and student.
  */
 function sortScores(Scores){
-    for(j = 0; j < Scores.length(); j++){
-        for(k = j; k < Scores.length(); k++){
+    for(let j = 0; j < Scores.length(); j++){
+        for(let k = j; k < Scores.length(); k++){
             let scr1 = Scores.get(j);
             let scr2 = Scores.get(k);
             if(scr1[1] > scr2[1]){
@@ -440,8 +462,8 @@ function sortScores(Scores){
  * @param {ArrayList} Map an ArrayList containing [cnt0,[Shift,Score,Student]] entries
  */
 function sortMapping(Map){
-    for(j = 0; j < Map.length(); j++){
-        for(k = j; k < Map.length(); k++){
+    for(let j = 0; j < Map.length(); j++){
+        for(let k = j; k < Map.length(); k++){
             let scoreCnt1 = Map.get(j).get(0);
             let scoreCnt2 = Map.get(k).get(0);
             if(scoreCnt1 < scoreCnt2){
@@ -456,10 +478,6 @@ function sortMapping(Map){
  * Exported Functions
  * ------------------
  */
-module.exports = {
-
-    
-}
 
 
 

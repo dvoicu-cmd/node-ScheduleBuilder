@@ -11,6 +11,12 @@
  * How the methods work:
  * 
  */
+
+import ArrayList from './ArrayList.js';
+import Student from './student.js';
+import Schedule from './schedule.js';
+
+
 class Shift{
 
     /**
@@ -37,6 +43,13 @@ class Shift{
      */
     get shiftDate(){
         return this._shiftDate;
+    }
+    
+    /**
+     * Returns the shift type/name
+     */
+    get shiftType(){
+        return this._type;
     }
 
     /**
@@ -85,9 +98,9 @@ class Shift{
     }
 
     assignedStudents(){
-        outputCpy = new ArrayList();
-        for(let i=0; i<this._assignedStudents; i++){
-            outputCpy.add(this._assignedStudents.at(i));
+        let outputCpy = new ArrayList();
+        for(let i=0; i<this._assignedStudents.length(); i++){
+            outputCpy.add(this._assignedStudents.get(i));
         }
         return outputCpy;
     }
@@ -172,4 +185,4 @@ class Shift{
 
 }
 //Export the class
-module.exports = Shift;
+export default Shift;

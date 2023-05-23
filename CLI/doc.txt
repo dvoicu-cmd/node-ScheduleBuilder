@@ -1,6 +1,0 @@
-Lessons learned so far,
-Import and exporting functions must be done in a specific way. 
-Litterally one line is needed to export classes. 
-Prompots work in a specific format const answer = await (type/inquirer.prompt). 
-answer will contain the outcome of the prompt.
-There is no way to mass export all functions. Damn it.
