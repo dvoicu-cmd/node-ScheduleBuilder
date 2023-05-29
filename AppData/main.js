@@ -282,31 +282,31 @@ function scoreCompatability(Shift,Student){
  * @returns an arrrayList of students
  */
 function relationWithScore(score, Shift, Mapping){
+    let shiftEntry = getRelations(Shift,Mapping);
+    let relationsWithScore = initList();
+    for(let p = 0; p<shiftEntry.length(); p++){
+        let specificRelation = shiftEntry.get(p); //Get the specific shift,score,student relationship we are analyzing.
+        let scoreOfRelation = specificRelation.at(1); //I forgot, these are arrays... Not sure if I should try to change them.
+        if(scoreOfRelation == score){
+            relationsWithScore.add(specificRelation.at(2));
+        }
+    }
+    return relationsWithScore; //Return the found students.
+}
+
+export function getRelations(Shift,Mapping){
     //First, find the index of the relations for the specified shift
     let shiftEntry = undefined;
-    for(let p = 0; p<Mapping.length(); p++){
+    for(let p = 0; p < Mapping.length(); p++){
         let Entry = Mapping.get(p).get(1);
         if(Shift.equals(Entry)){
             shiftEntry = Mapping.get(p).get(2);
-            break;
+           break;
         }
     }
-
-    if(shiftEntry == undefined){ //If nothing was found, that means the shift that was entered was not in the Mapping, return undefined.
-        return undefined;
-    }
-    else{
-        let relationsWithScore = initList();
-        for(let p = 0; p<shiftEntry.length(); p++){
-            let specificRelation = shiftEntry.get(p); //Get the specific shift,score,student relationship we are analyzing.
-            let scoreOfRelation = specificRelation.at(1); //I forgot, these are arrays... Not sure if I should try to change them.
-            if(scoreOfRelation == score){
-                relationsWithScore.add(specificRelation.at(2));
-            }
-        }
-        return relationsWithScore; //Return the found students.
-    }
-
+       //If nothing was found, that means the shift that was entered was not in the Mapping, return undefined.
+    if(shiftEntry == undefined) return undefined;
+    else return shiftEntry;
 }
 
 
@@ -330,10 +330,6 @@ function unassign(shift, student){
  * ------------------------
  * 
  */
-
-export function allRelationsOfShift(specificShift, Mapping){
-    return relationWithScore(specificShift,Mapping);
-}
 
 export function bestStudentsForShift(specificShift, Mapping){
     return relationWithScore(specificShift.getNum30MinChunks(),specificShift,Mapping);
