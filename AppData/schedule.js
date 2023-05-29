@@ -49,7 +49,10 @@ class Schedule {
                 while(startIndex == -1){
                     nextBestFrom += 0.5;
                     startIndex = this._selectedTime.indexOf(nextBestFrom);
-                    if(nextBestFrom > 21) return; //Give up if you don't find a number.
+                    if(nextBestFrom > this._selectedTime.at(this._selectedTime.length-1)){
+                        return; //Give up if you don't find a number.
+                    }
+                    
                 }
             }
         }
@@ -63,16 +66,19 @@ class Schedule {
                 while(endIndex == -1){
                     nextBestTo -= 0.5;
                     endIndex = this._selectedTime.indexOf(nextBestTo);
-                    if(nextBestTo < 8.5) return; //Give up if you don't find a number.
+                    if(nextBestTo < this._selectedTime.at(0)){
+                        return; //Give up if you don't find a number.
+                    } 
                 }
             }
         }
         //Only perform the operation of removing the interval if the the starting index is smaller than the ending index.
-        if(startIndex < endIndex){
+        if(startIndex <= endIndex){
             let prt1 = this._selectedTime.splice(0, startIndex);
             let prt2 = this._selectedTime.splice(endIndex-startIndex+1, this._selectedTime.length-1); //When splice is called, ._selectedTime takes on the other half of the array. This index needs to be compensated here
             this._selectedTime = prt1.concat(prt2);
         }
+
     }
     
     /**
@@ -89,6 +95,7 @@ class Schedule {
     subSection(from,till){
         let startIndex = this._selectedTime.indexOf(from);
         let endIndex = this._selectedTime.indexOf(till);
+        if(startIndex == -1 || endIndex == -1) return;
         if(startIndex < endIndex){
             this._selectedTime.splice(0, startIndex);
             this._selectedTime.splice(endIndex-startIndex+1, this._selectedTime.length-1);
