@@ -667,13 +667,13 @@ function displayRelations(){
 		let top3 = '';
 		if(sftRelations.length()-3 < 0){//In case there are less than 3 possible combinations
 			for(let i = sftRelations.length()-1; i >= 0; i--){
-				top3 = top3 + count + ') ' +  sftRelations.get(i).at(2).name + ', ';
+				top3 = top3 + '#' + count + ') ' +  sftRelations.get(i).at(2).name + ' [' + sftRelations.get(i).at(1) + '/' + sftLen + '], ';
 				count++;
 			}
 		}
 		else{ //Otherwise...
 			for(let i = sftRelations.length()-1; i>=sftRelations.length()-3; i--){
-				top3 = top3 + count + ') ' + sftRelations.get(i).at(2).name + ', ';
+				top3 = top3 + '#' + count + ') ' + sftRelations.get(i).at(2).name + ' [' + sftRelations.get(i).at(1) + '/' + sftLen + '], ';
 				count++;
 			}
 		}
@@ -684,7 +684,7 @@ function displayRelations(){
 		count = 1;
 
 		while(j<=2){
-			bottom3 = bottom3 + count + ') ' + sftRelations.get(j).at(2).name + ', ';
+			bottom3 = bottom3 + '#' + count + ') ' + sftRelations.get(j).at(2).name + ' [' + sftRelations.get(j).at(1) + '/' + sftLen + '], ';
 			j++;
 			count++;
 		}
@@ -699,10 +699,10 @@ function displayRelations(){
 		}
 
 		//Construct the output.
-		output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime +'\n' + 
+		output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime + ', Number of blocks: ' + sftLen + '\n' + 
 		'Assign Student(s): '+ assignedStudents + '\n' + 
 		'Best for Shift: ' + top3 + '\n' +
-		'Worse for Shift: ' + bottom3 +
+		'Worst for Shift: ' + bottom3 +
 		'\n *--------------------* \n';
 	}
 	return output;
