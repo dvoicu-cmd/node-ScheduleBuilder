@@ -10,6 +10,7 @@ import Shift from './AppData/shift.js';
 import Student from './AppData/student.js'
 import Schedule from './AppData/schedule.js';
 import * as main from './AppData/main.js';
+import * as FileSystem from 'fs';
 
 //Global Variables
 const listStudents = new ArrayList();
@@ -84,11 +85,16 @@ async function StudentMenu(){
 				value: 2,
 			},
 			{
-				name: 'Back',
+				name: 'Save Students',
 				value: 3,
+			},
+			{
+				name: 'Back',
+				value: 4,
 			}
+
 		],
-		pageSize: '4'
+		pageSize: '5'
 	});
 	//Process answer
 	switch(answer){
@@ -99,6 +105,8 @@ async function StudentMenu(){
 		case 2:
 			return editStudentInital();
 		case 3:
+			return saveStd();
+		case 4:
 			return mainMenu();
 	}
 }
@@ -707,6 +715,61 @@ function displayRelations(){
 	}
 	return output;
 }
+
+async function saveStd(){
+	ClearTerminal();
+	try{
+		if(listStudents.length()<=0){
+			throw err;
+		}
+		// for(let i = 0; i<listStudents.length(); i++){
+		// 	FileSystem.writeFile('savedStudents.json', JSON.stringify(listStudents.get(i)), function(err){
+		// 		if (err) throw err;
+		// 	});
+		// }
+		FileSystem.writeFile('savedStudents.json', JSON.stringify(listStudents), function(err){
+			if (err) throw err;
+		});
+	
+	}
+	catch(err){
+		message('Err: No students to save.',errMsg);
+		await sleep();
+		return StudentMenu();
+	}
+
+	let tmp;
+	FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){
+		if (err){
+			throw err;
+		}
+		tmp = data;
+		console.log(data);
+	});
+
+
+	message("Saved Students.",successMsg);
+	await sleep();
+	return StudentMenu();
+}
+
+function saveSft(List){
+	ClearTerminal();
+	try{
+		for(let i = 0; i<List.length(); i++){
+			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
+				if (err) throw err;
+				console.log('saved');
+			});
+		}
+	}
+	catch(err){
+		mainMenu();
+	}
+	mainMenu();
+}
+
+
 
 //----- Initial call ------
 await mainMenu();
