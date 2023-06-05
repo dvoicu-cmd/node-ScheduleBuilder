@@ -13,8 +13,8 @@ import * as main from './AppData/main.js';
 import * as FileSystem from 'fs';
 
 //Global Variables
-const listStudents = new ArrayList();
-const listShifts = new ArrayList();
+let listStudents = new ArrayList();
+let listShifts = new ArrayList();
 let mapping;
 let errMsg = 650;
 let successMsg = 800;
@@ -591,7 +591,7 @@ async function processSchedule(){
 	else{
 
 	}
-	
+
 	ClearTerminal();
 	main.resetAssignments(listShifts, listStudents);
 	mainMenu();
@@ -698,10 +698,12 @@ function displayRelations(){
 		}
 
 		//Construct the output.
-		output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime + ', Number of blocks: ' + sftLen + '\n' + 
-		'Assign Student(s): '+ assignedStudents + '\n' + 
-		'Best for Shift: ' + top3 +
-		'\n *--------------------* \n';
+		// output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime + ', Number of blocks: ' + sftLen + '\n' + 
+		// 'Assign Student(s): '+ assignedStudents + '\n' + 
+		// 'Best for Shift: ' + top3 +
+		// '\n *--------------------* \n';
+		output = `${output} ${sft.shiftType} on ${sft.shiftDate} at ${sftStartTime} - ${sftEndTime}, Number of Blocks: ${sftLen}\nAssign Student(s): ${assignedStudents}\nBest for Shift: ${top3}
+		*--------------------*\n`;
 	}
 	return output;
 }
@@ -712,15 +714,7 @@ async function saveStd(){
 		if(listStudents.length()<=0){
 			throw err;
 		}
-		// for(let i = 0; i<listStudents.length(); i++){
-		// 	FileSystem.writeFile('savedStudents.json', JSON.stringify(listStudents.get(i)), function(err){
-		// 		if (err) throw err;
-		// 	});
-		// }
-		FileSystem.writeFile('savedStudents.json', JSON.stringify(listStudents), function(err){
-			if (err) throw err;
-		});
-	
+		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
 	}
 	catch(err){
 		message('Err: No students to save.',errMsg);
@@ -728,38 +722,62 @@ async function saveStd(){
 		return StudentMenu();
 	}
 
-	let tmp;
-	FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){
-		if (err){
-			throw err;
-		}
-		tmp = data;
-		console.log(data);
-	});
-
-
 	message("Saved Students.",successMsg);
 	await sleep();
 	return StudentMenu();
 }
 
-function saveSft(List){
-	ClearTerminal();
+function loadStds(){
+	let read
 	try{
-		for(let i = 0; i<List.length(); i++){
-			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
-				if (err) throw err;
-				console.log('saved');
-			});
-		}
+		read = listStudents = JSON.parse(FileSystem.readFileSync('savedStudents.json'));
 	}
 	catch(err){
-		mainMenu();
+		console.log(err);
+		return;
 	}
-	mainMenu();
+	Object.assign(new ArrayList(), read);
+	console.log()
+	
+}
+
+//Investigate local storage:
+// https://stackoverflow.com/questions/18089033/json-stringify-does-not-process-object-methods
+// https://stackoverflow.com/questions/10358100/how-to-access-localstorage-in-node-js
+//Rather than parsing using json. JSON is for data storage.
+
+async function saveSft(List){
+	ClearTerminal();
+	try{
+		if(listShifts.length()<=0){
+			throw err;
+		}
+		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
+	
+	}
+	catch(err){
+		message('Err: No shifts to save.',errMsg);
+		await sleep();
+		return ShiftMenu();
+	}
+
+	message("Saved Shifts.",successMsg);
+	await sleep();
+	return ShiftMenu();
+}
+
+function loadSfts(){
+	let read;
+	try{
+		read = JSON.parse(FileSystem.readFileSync('savedShifts.json'));
+	}
+	catch(err){ //If file does not exit
+		return;
+	}
 }
 
 
-
 //----- Initial call ------
+loadSfts();
+loadStds();
 await mainMenu();
