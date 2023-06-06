@@ -499,89 +499,89 @@ async function processSchedule(){
 
 //TESTING STUFF TESTING STUFF TESTING STUFF:
 	
-	//STUDENT SAMPLE
-    // const Baran = new Student('Baran Shajari');
-    // Baran.reduceAvailability("Thr",19.5,20.5);
-    // Baran.reduceAvailability("Fri",14.0,19.0);
+//	STUDENT SAMPLE
+    const Baran = new Student('Baran Shajari');
+    Baran.reduceAvailability("Thr",19.5,20.5);
+    Baran.reduceAvailability("Fri",14.0,19.0);
     
-    // const Justin = new Student('Justin Balkisson');
-    // Justin.reduceAvailability("Mon",11.5,13.0);
-    // Justin.reduceAvailability("Mon",17.5,21.0);
-    // Justin.reduceAvailability("Tue",8.5,21.0);
-    // Justin.reduceAvailability("Wed",11.5,13.0);
-    // Justin.reduceAvailability("Wed",14.5,21.0);
-    // Justin.reduceAvailability("Thr",9.0,11.0);
-    // Justin.reduceAvailability("Thr",13.0,15.0);
-    // Justin.reduceAvailability("Thr",18.0,21.0);
-    // Justin.reduceAvailability("Fri",13.5,15.5);
-    // Justin.reduceAvailability("Fri",18.0,21.0);
+    const Justin = new Student('Justin Balkisson');
+    Justin.reduceAvailability("Mon",11.5,13.0);
+    Justin.reduceAvailability("Mon",17.5,21.0);
+    Justin.reduceAvailability("Tue",8.5,21.0);
+    Justin.reduceAvailability("Wed",11.5,13.0);
+    Justin.reduceAvailability("Wed",14.5,21.0);
+    Justin.reduceAvailability("Thr",9.0,11.0);
+    Justin.reduceAvailability("Thr",13.0,15.0);
+    Justin.reduceAvailability("Thr",18.0,21.0);
+    Justin.reduceAvailability("Fri",13.5,15.5);
+    Justin.reduceAvailability("Fri",18.0,21.0);
 
-    // const Sara = new Student('Sara Malik Araibi');
-    // Sara.reduceAvailability("Mon",11.5,14.5);
-    // Sara.reduceAvailability("Tue",10.0,11.5);
-    // Sara.reduceAvailability("Tue",16.0,17.5);
-    // Sara.reduceAvailability("Wed",11.5,13.0);
-    // Sara.reduceAvailability("Wed",18.0,19.0);
-    // Sara.reduceAvailability("Thr",13.0,15.0);
-    // Sara.reduceAvailability("Thr",16.0,17.5);
-    // Sara.reduceAvailability("Fri",10.0,11.5);
-    // Sara.reduceAvailability("Fri",13.5,21.0);
+    const Sara = new Student('Sara Malik Araibi');
+    Sara.reduceAvailability("Mon",11.5,14.5);
+    Sara.reduceAvailability("Tue",10.0,11.5);
+    Sara.reduceAvailability("Tue",16.0,17.5);
+    Sara.reduceAvailability("Wed",11.5,13.0);
+    Sara.reduceAvailability("Wed",18.0,19.0);
+    Sara.reduceAvailability("Thr",13.0,15.0);
+    Sara.reduceAvailability("Thr",16.0,17.5);
+    Sara.reduceAvailability("Fri",10.0,11.5);
+    Sara.reduceAvailability("Fri",13.5,21.0);
 
-    // const Dan = new Student('Dan Stefan Voicu');
-    // Dan.reduceAvailability("Mon",8.5,10.5);
-    // Dan.reduceAvailability("Mon",11.5,12.5);
-    // Dan.reduceAvailability("Mon",16.0,19.0);
-    // Dan.reduceAvailability("Tue",10.0,11.5);
-    // Dan.reduceAvailability("Wed",8.5,9.5);
-    // Dan.reduceAvailability("Wed",11.5,12.5);
-    // Dan.reduceAvailability("Wed",16.0,17.5);
-    // Dan.reduceAvailability("Wed",19.0,20.0);
-    // Dan.reduceAvailability("Thr",10.0,11.5);
-    // Dan.reduceAvailability("Thr",16.0,17.5);
-    // Dan.reduceAvailability("Fri",8.5,8.5);
-    // Dan.reduceAvailability("Fri",11.5,12.5);
+    const Dan = new Student('Dan Stefan Voicu');
+    Dan.reduceAvailability("Mon",8.5,10.5);
+    Dan.reduceAvailability("Mon",11.5,12.5);
+    Dan.reduceAvailability("Mon",16.0,19.0);
+    Dan.reduceAvailability("Tue",10.0,11.5);
+    Dan.reduceAvailability("Wed",8.5,9.5);
+    Dan.reduceAvailability("Wed",11.5,12.5);
+    Dan.reduceAvailability("Wed",16.0,17.5);
+    Dan.reduceAvailability("Wed",19.0,20.0);
+    Dan.reduceAvailability("Thr",10.0,11.5);
+    Dan.reduceAvailability("Thr",16.0,17.5);
+    Dan.reduceAvailability("Fri",8.5,8.5);
+    Dan.reduceAvailability("Fri",11.5,12.5);
 
-	// const Ali = new Student('Muhammad Ali');
-    // Ali.reduceAvailability("Mon",9.0,10.5);
-    // Ali.reduceAvailability("Mon",11.5,13.0);
-    // Ali.reduceAvailability("Mon",14.5,17.5)
+	const Ali = new Student('Muhammad Ali');
+    Ali.reduceAvailability("Mon",9.0,10.5);
+    Ali.reduceAvailability("Mon",11.5,13.0);
+    Ali.reduceAvailability("Mon",14.5,17.5)
 
-	// listStudents.add(Baran);
-	// listStudents.add(Justin);
-	// listStudents.add(Sara);
-	// listStudents.add(Dan);
-	// listStudents.add(Ali);
+	listStudents.add(Baran);
+	listStudents.add(Justin);
+	listStudents.add(Sara);
+	listStudents.add(Dan);
+	listStudents.add(Ali);
 
-	// //SHIFTS SAMPLE
-	// for(let i = 0; i<5; i++){ //for 5 days.
-    //     for(let j = 0; j<2; j++){ // make 2 shifts.
-    //         let date;
-    //         if(i == 0){
-    //             date = "Mon";
-    //         }
-    //         if(i == 1){
-    //             date = "Tue";
-    //         }
-    //         if(i == 2){
-    //             date = "Wed";
-    //         }
-    //         if(i == 3){
-    //             date = "Thr";
-    //         }
-    //         if(i == 4){
-    //             date = "Fri";
-    //         }
-    //         const sft = new Shift("WSC");
-    //         sft.setTime(j+8.5, j+9.0);
-    //         sft.setDate(date);
-    //         listShifts.add(sft); 
-    //     }
-    // }
+	//SHIFTS SAMPLE
+	for(let i = 0; i<5; i++){ //for 5 days.
+        for(let j = 0; j<2; j++){ // make 2 shifts.
+            let date;
+            if(i == 0){
+                date = "Mon";
+            }
+            if(i == 1){
+                date = "Tue";
+            }
+            if(i == 2){
+                date = "Wed";
+            }
+            if(i == 3){
+                date = "Thr";
+            }
+            if(i == 4){
+                date = "Fri";
+            }
+            const sft = new Shift("WSC");
+            sft.setTime(j+8.5, j+9.0);
+            sft.setDate(date);
+            listShifts.add(sft); 
+        }
+    }
 
-    // let sftMON = new Shift("WSC");
-    // sftMON.setTime(13.5,15.5);
-    // sftMON.setDate("Fri");
-	// listShifts.add(sftMON);
+    let sftMON = new Shift("WSC");
+    sftMON.setTime(13.5,15.5);
+    sftMON.setDate("Fri");
+	listShifts.add(sftMON);
 
 	if(listShifts.length()<=0 || listStudents.length()<=0){
 		message('Err: Students or Shifts are Emp')
@@ -717,35 +717,35 @@ function displayRelations(){
 	return output;
 }
 
-async function saveStd(){
-	ClearTerminal();
-	try{
-		if(listStudents.length()<=0){
-			throw err;
-		}
-		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
-	}
-	catch(err){
-		console.log(err);
-		message('Err: No students to save.',errMsg);
-		await sleep();
-		return StudentMenu();
-	}
+// async function saveStd(){
+// 	ClearTerminal();
+// 	try{
+// 		if(listStudents.length()<=0){
+// 			throw err;
+// 		}
+// 		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
+// 	}
+// 	catch(err){
+// 		console.log(err);
+// 		message('Err: No students to save.',errMsg);
+// 		await sleep();
+// 		return StudentMenu();
+// 	}
 
-	message("Saved Students.",successMsg);
-	await sleep();
-	return StudentMenu();
-}
+// 	message("Saved Students.",successMsg);
+// 	await sleep();
+// 	return StudentMenu();
+// }
 
-function loadStds(){
-	try{
-		read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
-	}
-	catch(err){
-		console.log(err);
-		return;
-	}
-}
+// function loadStds(){
+// 	try{
+// 		read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
+// 	}
+// 	catch(err){
+// 		console.log(err);
+// 		return;
+// 	}
+// }
 //YOU SUCK LOCAL STORAGE. YOU RUINED MY DREAMS.
 
 // async function saveSft(List){

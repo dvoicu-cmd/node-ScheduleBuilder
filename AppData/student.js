@@ -23,6 +23,7 @@ class Student {
         this._name = name;
         this._hours = 0;
         this._assignedShifts = new ArrayList();
+        this._assignedtoDay = generateDayAssignments();
         this._avalability = generateListOfSchedules();
         this._preference = generateListOfSchedules();        
     }
@@ -109,6 +110,41 @@ class Student {
     }
 
     /**
+     * Return true or false if a student is already assigned for the day.
+     */
+    assignedToDay(date){
+        let orderOfDates = ["Mon","Tue","Wed","Thr","Fri"]
+        let index = undefined;
+        switch(date){
+            case "Mon":
+                index = 0;
+                break;
+            case "Tue":
+                index = 1;
+                break;
+            case "Wed":
+                index = 2;
+                break;
+            case "Thr":
+                index = 3;
+                break;
+            case "Fri":
+                index = 4;
+                break;
+            default:
+                console.log("No valid input");
+                break;
+        } 
+    }
+
+    /**
+     * Resets the day assignments of a given student.
+     */
+    resetAssignedDay(){
+        this._assignedtoDay = generateDayAssignments();
+    }
+
+    /**
      * Reduces the set of time for when a student wants to work
      * @param {*} date a number from 0 to 4 that is used to select a particular schedule for a day of the week.
      * @param {*} timeFrom one of the numbers in the set {8.5, 9.0, 9.5, ..., 21.0} used to select a starting interval to crop availability.
@@ -191,6 +227,14 @@ function generateListOfSchedules(){
     let output = [];
     for(let i = 0; i<5; i++){
         output.push(new Schedule());
+    }
+    return output;
+}
+
+function generateDayAssignments(){
+    let output = new ArrayList();
+    for(let i = 0; i<5; i++){
+        output.add(false);
     }
     return output;
 }
