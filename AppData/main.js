@@ -180,15 +180,21 @@ export function setAssignmentsRandom(Mapping){
         let thisShift = orderOfShift.get(i); //Shift in question
         let thisStack = stackList.get(i); //Stack of students that can take the shift.
 
-        //The student at the top of the stack is the most compatable with the shift. But that student can be at max hours.
+        //The student at the top of the stack is the most compatable with the shift. But that student can be at max hours or can already be assigned in the day.
         for(let j=0; j<=thisStack.size(); j++){
 
             let studentToAssign = thisStack.pop();
             
             try{
-                if(!(studentToAssign.atMaxHours())){ //If student is not at max hours. give them the shift
-                assign(thisShift,studentToAssign);
-                break;
+                if(!(studentToAssign.atMaxHours())){ //If student is not at max hours...
+                    
+                    let day = thisShift.shiftDate; //The date of the shift
+
+                    if(!(studentToAssign.assignedToDay(day))){ //If the student has not been assigned already in the day
+                        assign(thisShift,studentToAssign);
+                        break;
+                    }
+
                 }
             }
             catch(error){
@@ -313,12 +319,20 @@ export function getRelations(Shift,Mapping){
 function assign(shift, student){
     shift.selectStudent(student);
     student.assignShift(shift);
+
+    let day = shift.shiftDate;
+    student.assignToDate(day);
+
     student.addHours(shift.getNum30MinChunks()/2);
 }
 
 function unassign(shift, student){
     shift.removeStudent(student);
     student.unassignShift(shift);
+    
+    let day = shift.shiftDate;
+    student.resetAssignedSpecificDate(day);
+
     student.reduceHours(shift.getNum30MinChunks()/2);
 }
 

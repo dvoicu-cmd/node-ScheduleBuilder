@@ -135,13 +135,72 @@ class Student {
                 console.log("No valid input");
                 break;
         } 
+        return this._assignedtoDay.get(index);
     }
+
+    /**
+     * Changes the status on if a student is assigned on a day from false to true.
+     */
+    assignToDate(date){
+        let orderOfDates = ["Mon","Tue","Wed","Thr","Fri"]
+        let index = undefined;
+        switch(date){
+            case "Mon":
+                index = 0;
+                break;
+            case "Tue":
+                index = 1;
+                break;
+            case "Wed":
+                index = 2;
+                break;
+            case "Thr":
+                index = 3;
+                break;
+            case "Fri":
+                index = 4;
+                break;
+            default:
+                console.log("No valid input");
+                break;
+            } 
+        //Replace the element
+        this._assignedtoDay.addAt(index+1, true);
+        this._assignedtoDay.remove(index);
+    }
+
 
     /**
      * Resets the day assignments of a given student.
      */
-    resetAssignedDay(){
+    resetAssignedDays(){
         this._assignedtoDay = generateDayAssignments();
+    }
+
+    resetAssignedSpecificDate(date){
+        let index = undefined;
+        switch(date){
+            case "Mon":
+                index = 0;
+                break;
+            case "Tue":
+                index = 1;
+                break;
+            case "Wed":
+                index = 2;
+                break;
+            case "Thr":
+                index = 3;
+                break;
+            case "Fri":
+                index = 4;
+                break;
+            default:
+                console.log("No valid input");
+                break;
+            }
+        this._assignedtoDay.addAt(index+1, false);
+        this._assignedtoDay.remove(index);
     }
 
     /**
