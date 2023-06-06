@@ -732,72 +732,41 @@ async function saveStd(){
 		return StudentMenu();
 	}
 
-	let tmp;
-	FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){
-		if (err){
-			throw err;
-		}
-		tmp = data;
-		console.log(data);
-	});
-
-
 	message("Saved Students.",successMsg);
 	await sleep();
 	return StudentMenu();
 }
 
 function loadStds(){
-	let read
 	try{
-		read = FileSystem.readdirSync('./Data/Students/');
+		read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
 	}
 	catch(err){
 		console.log(err);
 		return;
 	}
-	Object.assign(new ArrayList(), read);
-	console.log()
-	
 }
+//YOU SUCK LOCAL STORAGE. YOU RUINED MY DREAMS.
 
-//Investigate local storage:
-// https://stackoverflow.com/questions/18089033/json-stringify-does-not-process-object-methods
-// https://stackoverflow.com/questions/10358100/how-to-access-localstorage-in-node-js
-//Rather than parsing using json. JSON is for data storage.
-
-async function saveSft(List){
-	ClearTerminal();
-	try{
-		for(let i = 0; i<List.length(); i++){
-			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
-				if (err) throw err;
-				console.log('saved');
-			});
-		}
-		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
-	}
-	catch(err){
-		mainMenu();
-	}
-	mainMenu();
-}
-
-
-function makeid(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
-}
+// async function saveSft(List){
+// 	ClearTerminal();
+// 	try{
+// 		for(let i = 0; i<List.length(); i++){
+// 			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
+// 				if (err) throw err;
+// 				console.log('saved');
+// 			});
+// 		}
+// 		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
+// 	}
+// 	catch(err){
+// 		mainMenu();
+// 	}
+// 	mainMenu();
+// }
 
 
 //----- Initial call ------
 //loadSfts();
-loadStds();
+//loadStds();
 await mainMenu();
