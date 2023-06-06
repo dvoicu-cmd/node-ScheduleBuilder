@@ -14,8 +14,8 @@ import * as FileSystem from 'fs';
 
 
 //Global Variables
-let listStudents = new ArrayList();
-let listShifts = new ArrayList();
+const listStudents = new ArrayList();
+const listShifts = new ArrayList();
 let mapping;
 let errMsg = 650;
 let successMsg = 800;
@@ -602,7 +602,7 @@ async function processSchedule(){
 	else{
 
 	}
-
+	
 	ClearTerminal();
 	main.resetAssignments(listShifts, listStudents);
 	mainMenu();
@@ -709,12 +709,10 @@ function displayRelations(){
 		}
 
 		//Construct the output.
-		// output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime + ', Number of blocks: ' + sftLen + '\n' + 
-		// 'Assign Student(s): '+ assignedStudents + '\n' + 
-		// 'Best for Shift: ' + top3 +
-		// '\n *--------------------* \n';
-		output = `${output} ${sft.shiftType} on ${sft.shiftDate} at ${sftStartTime} - ${sftEndTime}, Number of Blocks: ${sftLen}\nAssign Student(s): ${assignedStudents}\nBest for Shift: ${top3}
-		*--------------------*\n`;
+		output = output + sft.shiftType + ' on ' + sft.shiftDate + ' at ' + sftStartTime + '-' + sftEndTime + ', Number of blocks: ' + sftLen + '\n' + 
+		'Assign Student(s): '+ assignedStudents + '\n' + 
+		'Best for Shift: ' + top3 +
+		'\n *--------------------* \n';
 	}
 	return output;
 }
@@ -725,10 +723,7 @@ async function saveStd(){
 		if(listStudents.length()<=0){
 			throw err;
 		}
-		for(let i = 0; i<listStudents.length(); i++){
-			let id = makeid(5);
-			FileSystem.writeFileSync('./Data/std:'+id,JSON.stringify(listStudents.get(i)));
-		}
+		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
 	}
 	catch(err){
 		console.log(err);
@@ -736,6 +731,16 @@ async function saveStd(){
 		await sleep();
 		return StudentMenu();
 	}
+
+	let tmp;
+	FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){
+		if (err){
+			throw err;
+		}
+		tmp = data;
+		console.log(data);
+	});
+
 
 	message("Saved Students.",successMsg);
 	await sleep();
@@ -764,31 +769,20 @@ function loadStds(){
 async function saveSft(List){
 	ClearTerminal();
 	try{
-		if(listShifts.length()<=0){
-			throw err;
+		for(let i = 0; i<List.length(); i++){
+			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
+				if (err) throw err;
+				console.log('saved');
+			});
 		}
 		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
 	}
 	catch(err){
-		message('Err: No shifts to save.',errMsg);
-		await sleep();
-		return ShiftMenu();
+		mainMenu();
 	}
-
-	message("Saved Shifts.",successMsg);
-	await sleep();
-	return ShiftMenu();
+	mainMenu();
 }
 
-function loadSfts(){
-	let read;
-	try{
-		read = JSON.parse(FileSystem.readFileSync('savedShifts.json'));
-	}
-	catch(err){ //If file does not exit
-		return;
-	}
-}
 
 function makeid(length) {
     let result = '';
