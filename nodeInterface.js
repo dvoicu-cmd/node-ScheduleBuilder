@@ -12,6 +12,7 @@ import Schedule from './AppData/schedule.js';
 import * as main from './AppData/main.js';
 import * as FileSystem from 'fs';
 
+
 //Global Variables
 let listStudents = new ArrayList();
 let listShifts = new ArrayList();
@@ -19,6 +20,16 @@ let mapping;
 let errMsg = 650;
 let successMsg = 800;
 let sleep = (ms = 2000) => new Promise((r) => setTimeout(r,ms));
+
+
+// let localStorage;
+// if (typeof localStorage === "undefined" || localStorage === null) {
+// 	var LocalStorage = require('node-localstorage').LocalStorage;
+// 	localStorage = new LocalStorage('./scratch');
+// }
+
+//Two apporaches to this: save objs individually then load them individually or save the entire list. Lets see what works.
+  
 
 /**
  * Main menu function
@@ -714,9 +725,13 @@ async function saveStd(){
 		if(listStudents.length()<=0){
 			throw err;
 		}
-		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
+		for(let i = 0; i<listStudents.length(); i++){
+			let id = makeid(5);
+			FileSystem.writeFileSync('./Data/std:'+id,JSON.stringify(listStudents.get(i)));
+		}
 	}
 	catch(err){
+		console.log(err);
 		message('Err: No students to save.',errMsg);
 		await sleep();
 		return StudentMenu();
@@ -730,7 +745,7 @@ async function saveStd(){
 function loadStds(){
 	let read
 	try{
-		read = listStudents = JSON.parse(FileSystem.readFileSync('savedStudents.json'));
+		read = FileSystem.readdirSync('./Data/Students/');
 	}
 	catch(err){
 		console.log(err);
@@ -753,7 +768,6 @@ async function saveSft(List){
 			throw err;
 		}
 		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
-	
 	}
 	catch(err){
 		message('Err: No shifts to save.',errMsg);
@@ -776,8 +790,20 @@ function loadSfts(){
 	}
 }
 
+function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+
 
 //----- Initial call ------
-loadSfts();
+//loadSfts();
 loadStds();
 await mainMenu();
