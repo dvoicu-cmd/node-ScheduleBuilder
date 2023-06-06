@@ -20,6 +20,7 @@ let mapping;
 let errMsg = 650;
 let successMsg = 800;
 let sleep = (ms = 2000) => new Promise((r) => setTimeout(r,ms));
+let maxHours = 10;
 
 
 // let localStorage;
@@ -96,16 +97,20 @@ async function StudentMenu(){
 				value: 2,
 			},
 			{
+				name: 'Change Max Hours',
+				value: 3
+			},
+			{
 				name: 'Save Students',
-				value: 3,
+				value: 4,
 			},
 			{
 				name: 'Back',
-				value: 4,
+				value: 5,
 			}
 
 		],
-		pageSize: '5'
+		pageSize: '6'
 	});
 	//Process answer
 	switch(answer){
@@ -116,8 +121,10 @@ async function StudentMenu(){
 		case 2:
 			return editStudentInital();
 		case 3:
-			return saveStd();
+			return changeHours();
 		case 4:
+			return saveStd();
+		case 5:
 			return mainMenu();
 	}
 }
@@ -131,6 +138,7 @@ async function addStudent(){
 		return StudentMenu();
 	}
 	let newStudent = new Student(answer);
+	newStudent.setMaxHours(maxHours);
 	listStudents.add(newStudent);
 	message('Added: '+newStudent._name, successMsg);
 	await sleep();
@@ -287,7 +295,24 @@ async function editStudent(std){
 		return editStudent(std);
 	}
 
+}
 
+async function changeHours(){
+	ClearTerminal();
+	const answer = await input({message: 'Enter Max Hours from 1 to 45'});
+	let hours = parseInt(answer);
+	if( isNaN(hours) || !(0 < hours <= 45)){
+		message("Err: Invalid input", errMsg);
+		await sleep();
+		return StudentMenu();
+	}
+	else{
+		maxHours = hours;
+		main.setHours(listStudents, hours);
+	}
+	message("Updated Max Hours to: "+hours,successMsg);
+	await sleep();
+	return StudentMenu();
 }
 
 

@@ -420,6 +420,14 @@ export function resetAssignments(listSft, listStd){
     }
 }
 
+
+export function setHours(listStd, hours){
+    for(let i = 0; i<listStd.length(); i++){
+        let std = listStd.get(i);
+        std.setMaxHours(hours);
+    }
+}
+
 /**
  * 
  * -------------------

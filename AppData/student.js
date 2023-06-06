@@ -240,6 +240,10 @@ class Student {
         }
     }
 
+    setMaxHours(n){
+        this.hourCap = n;
+    }
+
     /**
      * States if the student has max hours
      */
