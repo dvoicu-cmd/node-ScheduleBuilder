@@ -299,9 +299,11 @@ async function editStudent(std){
 
 async function changeHours(){
 	ClearTerminal();
+	console.log("Current hour capacity: "+maxHours);
 	const answer = await input({message: 'Enter Max Hours from 1 to 45'});
 	let hours = parseInt(answer);
-	if( isNaN(hours) || !(0 < hours <= 45)){
+
+	if((isNaN(hours)) || hours <= 0 || hours > 45){ // 1<=hours<=45
 		message("Err: Invalid input", errMsg);
 		await sleep();
 		return StudentMenu();
