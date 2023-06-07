@@ -148,13 +148,11 @@ class Schedule {
         return this._selectedTime.length;
     }
 
-    export(){
-        let str = "[";
-        for(let i = 0; i < this._selectedTime.length; i++){
-            str = str + this._selectedTime[i] + ", ";
-        }
-        str = str + "#]";
-        return str;
+    /**
+     * Function to import raw array data when loading up schedules.
+     */
+    importSchedule(rawData){
+        this._selectedTime = rawData;
     }
 
 }

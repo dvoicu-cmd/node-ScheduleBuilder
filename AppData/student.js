@@ -6,7 +6,6 @@
  *  - @param _hours an integer depicting the number of hours a student is working in a week. Default is 0.
  *  - @param _assignedShifts a list of Shift objects pointing to the shifts the student has assigned. Defualt is an empty array []
  *  - @param _avalability a list of 5 Schedule object that depicts the time the student is available. Default is 5 default schedule objects in an array.
- *  - @param _preference a list of 5 Schedule object that depicts when a student prefers to work. Default is 5 default schedule objects in an array.
  */
 import ArrayList from './ArrayList.js';
 import Shift from './shift.js';
@@ -24,8 +23,7 @@ class Student {
         this._hours = 0;
         this._assignedShifts = new ArrayList();
         this._assignedtoDay = generateDayAssignments();
-        this._avalability = generateListOfSchedules();
-        this._preference = generateListOfSchedules();        
+        this._avalability = generateListOfSchedules();   
     }
 
     /**
@@ -39,6 +37,10 @@ class Student {
      */
     get hours(){
         return this._hours;
+    }
+
+    get avalability(){
+        return this._avalability;
     }
 
     /**
@@ -55,6 +57,14 @@ class Student {
      */
     unassignShift(shift){
         this._assignedShifts.remove(shift);
+    }
+
+    /**
+     * Reset the assigned shifts to a new arrayList obj
+     */
+    resetAssignedShifts(){
+        this._assignedShifts = new ArrayList();
+        this._assignedtoDay = generateDayAssignments();
     }
 
     /**
@@ -107,6 +117,13 @@ class Student {
                 break;
         }
         return;
+    }
+
+    /**
+     * Import an array of five elements with schedules.
+     */
+    importAvalability(scheduleArray){
+        this._avalability = scheduleArray;
     }
 
     /**

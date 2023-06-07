@@ -11,11 +11,12 @@ import Student from './AppData/student.js'
 import Schedule from './AppData/schedule.js';
 import * as main from './AppData/main.js';
 import * as FileSystem from 'fs';
+import { plainToInstance, instanceToPlain } from 'class-transformer';
 
 
 //Global Variables
-const listStudents = new ArrayList();
-const listShifts = new ArrayList();
+let listStudents = new ArrayList();
+let listShifts = new ArrayList();
 let mapping;
 let errMsg = 650;
 let successMsg = 800;
@@ -527,11 +528,11 @@ async function processSchedule(){
 //TESTING STUFF TESTING STUFF TESTING STUFF:
 	
 //	STUDENT SAMPLE
-    const Baran = new Student('Baran Shajari');
-    Baran.reduceAvailability("Thr",19.5,20.5);
-    Baran.reduceAvailability("Fri",14.0,19.0);
+    // const Baran = new Student('Baran Shajari');
+    // Baran.reduceAvailability("Thr",19.5,20.5);
+    // Baran.reduceAvailability("Fri",14.0,19.0);
     
-    const Justin = new Student('Justin Balkisson');
+    // const Justin = new Student('Justin Balkisson');
     // Justin.reduceAvailability("Mon",11.5,13.0);
     // Justin.reduceAvailability("Mon",17.5,21.0);
     // Justin.reduceAvailability("Tue",8.5,21.0);
@@ -573,8 +574,8 @@ async function processSchedule(){
     // Ali.reduceAvailability("Mon",11.5,13.0);
     // Ali.reduceAvailability("Mon",14.5,17.5)
 
-	listStudents.add(Baran);
-	listStudents.add(Justin);
+	// listStudents.add(Baran);
+	// listStudents.add(Justin);
 	// listStudents.add(Sara);
 	// listStudents.add(Dan);
 	// listStudents.add(Ali);
@@ -605,15 +606,20 @@ async function processSchedule(){
     //     }
     // }
 
-    let sftMON = new Shift("WSC");
-    sftMON.setTime(13.5,15.5);
-    sftMON.setDate("Mon");
-	listShifts.add(sftMON);
+    // let sftMON = new Shift("WSC");
+    // sftMON.setTime(13.5,15.5);
+    // sftMON.setDate("Mon");
+	// listShifts.add(sftMON);
 
-	let sftMON2 = new Shift("WSC");
-	sftMON2.setTime (16,17);
-	sftMON.setDate("Mon");
-	listShifts.add(sftMON2);
+	// let sftMON2 = new Shift("WSC");
+	// sftMON2.setTime (16,17);
+	// sftMON.setDate("Mon");
+	// listShifts.add(sftMON2);
+
+
+
+	//END OF TEST SET
+
 
 	if(listShifts.length()<=0 || listStudents.length()<=0){
 		message('Err: Students or Shifts are Emp')
@@ -749,36 +755,61 @@ function displayRelations(){
 	return output;
 }
 
-// async function saveStd(){
-// 	ClearTerminal();
-// 	try{
-// 		if(listStudents.length()<=0){
-// 			throw err;
-// 		}
-// 		FileSystem.writeFileSync('savedStudents.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
-// 	}
-// 	catch(err){
-// 		console.log(err);
-// 		message('Err: No students to save.',errMsg);
-// 		await sleep();
-// 		return StudentMenu();
-// 	}
+async function saveStd(){
+	ClearTerminal();
+	try{
+		if(listStudents.length()<=0){
+			throw err;
+		}
+		let jsonWrite = JSON.stringify(instanceToPlain(listStudents)); 
+		FileSystem.writeFileSync('savedStudents.json', jsonWrite, function(err){if (err) throw err;});
+	}
+	catch(err){
+		console.log(err);
+		message('Err: No students to save.',errMsg);
+		await sleep();
+		return StudentMenu();
+	}
 
-// 	message("Saved Students.",successMsg);
-// 	await sleep();
-// 	return StudentMenu();
-// }
+	message("Saved Students.",successMsg);
+	await sleep();
+	return StudentMenu();
+}
 
-// function loadStds(){
-// 	try{
-// 		read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
-// 	}
-// 	catch(err){
-// 		console.log(err);
-// 		return;
-// 	}
-// }
-//YOU SUCK LOCAL STORAGE. YOU RUINED MY DREAMS.
+function loadStds(){
+	try{
+		//Read the arrayList
+		let read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
+		let jsonRead = JSON.parse(read);
+		let loadedList = plainToInstance(ArrayList, jsonRead);
+		let loadedStudentList = new ArrayList();
+
+		//Read the Students in the arrayList
+		for(let i = 0; i<loadedList.length(); i++){
+			//Intialize student
+			let stdLoad = loadedList.get(i);
+			let stdWithProperties = plainToInstance(Student, stdLoad);
+
+			//Now re-initalize behavior of schedules within students.
+			let studentSchedule = [];
+			for(let j = 0; j<5; j++){
+				let readSchedule = stdWithProperties.avalability.at(j);
+				let scheduleWithProperties = plainToInstance(Schedule, readSchedule);
+				studentSchedule.push(scheduleWithProperties);
+			}
+
+			stdWithProperties.resetAssignedShifts(); //Reset shift assignment properties
+			stdWithProperties.importAvalability(studentSchedule); //Import the avalability.
+			loadedStudentList.add(stdWithProperties); //Add student to list
+		}
+		listStudents = loadedStudentList; //Set the arrayList of students
+		maxHours = listStudents.get(0).hourCap;
+	}
+	catch(err){
+		console.log(err);
+		return;
+	}
+}
 
 // async function saveSft(List){
 // 	ClearTerminal();
@@ -800,5 +831,5 @@ function displayRelations(){
 
 //----- Initial call ------
 //loadSfts();
-//loadStds();
+loadStds();
 await mainMenu();
