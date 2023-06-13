@@ -88,6 +88,23 @@ class Student {
         }
     }
 
+    resetAvalabilityAt(date){
+        switch(date){
+            case "Mon":
+                this._avalability[0] = new Schedule();
+            case "Tue":
+                this._avalability[1] = new Schedule();
+            case "Wed":
+                this._avalability[2] = new Schedule();
+            case "Thr":
+                this._avalability[3] = new Schedule();
+            case "Fri":
+                this._avalability[4] = new Schedule();
+            default:
+                console.log("No valid input for avalabilityAt(date) method");
+        }
+    }
+
     /**
      * Reduces the time when a student is available 
      * @param {*} date a one of the strings: "Mon","Tue","Wed","Thr","Fri"
@@ -194,6 +211,9 @@ class Student {
         this._assignedtoDay = generateDayAssignments();
     }
 
+    /**
+     * Reset the truth value of a student being assigned to a specific day of the week.
+     */
     resetAssignedSpecificDate(date){
         let index = undefined;
         switch(date){

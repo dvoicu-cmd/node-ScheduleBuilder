@@ -98,20 +98,24 @@ async function StudentMenu(){
 				value: 2,
 			},
 			{
+				name: 'Reset Student Schedule',
+				value: 3,
+			},
+			{
 				name: 'Change Max Hours',
-				value: 3
+				value: 4
 			},
 			{
 				name: 'Save Students',
-				value: 4,
+				value: 5,
 			},
 			{
 				name: 'Back',
-				value: 5,
+				value: 6,
 			}
 
 		],
-		pageSize: '6'
+		pageSize: '7'
 	});
 	//Process answer
 	switch(answer){
@@ -122,10 +126,12 @@ async function StudentMenu(){
 		case 2:
 			return editStudentInital();
 		case 3:
-			return changeHours();
+			return resetStudentDateInitial();
 		case 4:
-			return saveStd();
+			return changeHours();
 		case 5:
+			return saveStd();
+		case 6:
 			return mainMenu();
 	}
 }
@@ -194,6 +200,7 @@ async function editStudentInital(){
 	}
 }
 
+//Edit student's
 async function editStudent(std){
 	ClearTerminal();
 
@@ -317,6 +324,93 @@ async function changeHours(){
 	await sleep();
 	return StudentMenu();
 }
+
+//Bro, this code reuse is not cool.
+async function resetStudentDateInitial(){
+	ClearTerminal();
+	if(listStudents.length() == 0){
+		message('Err: No students to edit', errMsg);
+		await sleep();
+		return StudentMenu();
+	}
+	console.log(listStdContents());
+	const answer = await input({message: 'choose what to edit:'});
+	let numAnswer = parseInt(answer);
+	let std = listStudents.get(numAnswer);
+	if(isNaN(numAnswer)){
+		message('Err: Invalid input', errMsg);
+		await sleep();
+		return StudentMenu();
+	}
+	else{
+		return resetStudentDate(std);
+	}
+}
+
+
+async function resetStudentDate(std){
+	ClearTerminal();
+	//There is probably a way to make this a function since this code reuse is stupid and not good design. But it has let me down multiple times.
+	console.log('Enter what date to edit');
+	const answer1 = await select ({
+		name: 'dateSelect',
+		message: 'Select date to edit for ' + std.name,
+		type: 'select',
+		choices: [
+			{
+				name: 'Monday',
+				value: 0
+			},
+			{
+				name: 'Tuesday',
+				value: 1
+			},
+			{
+				name: 'Wednesday',
+				value: 2
+			},
+			{
+				name: 'Thursday',
+				value: 3
+			},
+			{
+				name: 'Friday',
+				value: 4
+			},
+			{
+				name: 'Back',
+				value: 5
+			}
+		]
+	})	
+	//Determine what that selected date is.
+	let selectedDate;
+	switch(answer1){
+		case 0:
+			std.resetAvalabilityAt("Mon");
+			break;
+		case 1:
+			std.resetAvalabilityAt("Tue");
+			break;
+		case 2:
+			std.resetAvalabilityAt("Wed");
+			break;
+		case 3:
+			std.resetAvalabilityAt("Thr");
+			break;
+		case 4:
+			std.resetAvalabilityAt("Fri");
+			break;
+		case 5:
+			return StudentMenu();
+	}
+
+	message("Schedule reset", successMsg);
+	await sleep();
+	return StudentMenu();
+	
+}
+
 
 
 /**
@@ -661,7 +755,8 @@ function ClearTerminal(){
 async function confirmExit(){
 	ClearTerminal();
 	const answer = await confirm({
-		message: 'Are you sure you want to exit? All instance data will be lost.'
+		message: 'Are you sure you want to exit? All instance data will be lost.',
+		default: true
 	})
 	if(answer){
 		ClearTerminal();
