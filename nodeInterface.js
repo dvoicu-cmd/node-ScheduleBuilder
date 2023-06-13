@@ -804,6 +804,9 @@ function listSftContents(){
 	return output;
 }
 
+/**
+ * Constructs the string to display the assignments of students and shifts.
+ */
 function displayRelations(){
 	let output = '';
 	let len = listShifts.length();
@@ -846,6 +849,21 @@ function displayRelations(){
 		'Assign Student(s): '+ assignedStudents + '\n' + 
 		'Best for Shift: ' + top3 +
 		'\n *--------------------* \n';
+	}
+
+	//Now output the number of hours each student is working.
+	output = output + '\n############################\n' + 'Student\'s Working Hours: \n';
+	output = output + listStudentsHours();
+
+	return output;
+}
+
+function listStudentsHours(){
+	let output = '';
+	for(let i = 0; i < listStudents.length(); i++){
+		let thisStd = listStudents.get(i);
+		let hoursAssigned = thisStd.hours;
+		output = output + thisStd.name + ': ' + hoursAssigned + '\n';
 	}
 	return output;
 }
