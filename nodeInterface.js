@@ -432,8 +432,12 @@ async function ShiftMenu(){
 				value: 1,
 			},
 			{
-				name: 'Back',
+				name: 'Save Shifts',
 				value: 2,
+			},
+			{
+				name: 'Back',
+				value: 3,
 			}
 		],
 		pageSize: '4'
@@ -447,6 +451,9 @@ async function ShiftMenu(){
 			removeShift();
 			break;
 		case 2:
+			saveSft();
+			break;
+		case 3:
 			mainMenu();
 			break;
 	}
@@ -924,25 +931,61 @@ function loadStds(){
 	}
 }
 
-// async function saveSft(List){
-// 	ClearTerminal();
-// 	try{
-// 		for(let i = 0; i<List.length(); i++){
-// 			FileSystem.writeFile('file.json', JSON.stringify(List.get(i)), function(err){
-// 				if (err) throw err;
-// 				console.log('saved');
-// 			});
-// 		}
-// 		FileSystem.writeFileSync('savedShifts.json', JSON.stringify(listStudents), function(err){if (err) throw err;});
-// 	}
-// 	catch(err){
-// 		mainMenu();
-// 	}
-// 	mainMenu();
-// }
+async function saveSft(){
+	ClearTerminal();
+	try{
+		if(listShifts.length()<=0){
+			throw err;
+		}
+		let jsonWrite = JSON.stringify(instanceToPlain(listShifts)); 
+		FileSystem.writeFileSync('savedShifts.json', jsonWrite, function(err){if (err) throw err;});
+	}
+	catch(err){
+		console.log(err);
+		message('Err: No Shifts to save.',errMsg);
+		await sleep();
+		return ShiftMenu();
+	}
 
+	message("Saved Shifts.",successMsg);
+	await sleep();
+	return ShiftMenu();
+}
+
+function loadSfts(){
+	try{
+		//Read the arrayList
+		let read = FileSystem.readFileSync('savedShifts.json','utf8', function(err,data){if (err){throw err;}});
+		let jsonRead = JSON.parse(read);
+		let loadedList = plainToInstance(ArrayList, jsonRead);
+		let loadedShiftsList = new ArrayList();
+
+		//Read the Shifts in the arrayList
+		for(let i = 0; i<loadedList.length(); i++){
+			//Intialize shifts to load
+			let sftLoad = loadedList.get(i);
+			let stfWithProperties = plainToInstance(Shift, sftLoad);
+
+			//Now re-initalize behavior of schedules within shifts.
+			let readSchedule = stfWithProperties.shiftTime;
+			let scheduleWithProperties = plainToInstance(Schedule, readSchedule);
+			stfWithProperties.copyTime(scheduleWithProperties);
+			
+			//Reset the arrayList property for assigning students to shifts.
+			stfWithProperties.resetAssignedStudents();
+
+			//Add shift to list
+			loadedShiftsList.add(stfWithProperties);
+		}
+		listShifts = loadedShiftsList; //Set the arrayList of students
+	}
+	catch(err){
+		console.log(err);
+		return;
+	}
+}
 
 //----- Initial call ------
-//loadSfts();
+loadSfts();
 loadStds();
 await mainMenu();

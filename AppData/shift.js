@@ -183,6 +183,20 @@ class Shift{
         return "name: "+this._type+"\nshiftDate: "+this._shiftDate+"\nshiftTime: "+this._shiftTime.export();
     }
 
+    /**
+     * copy schedule to shift
+     */
+    copyTime(Schedule){
+        this._shiftTime = Schedule;
+    }
+
+    /**
+     * Reset the assigned students property (for reinitalizing shifts from loaded data)
+     */
+    resetAssignedStudents(){
+        this._assignedStudents = new ArrayList();
+    }
+
 }
 //Export the class
 export default Shift;
