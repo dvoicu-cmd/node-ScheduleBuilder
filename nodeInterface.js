@@ -732,14 +732,23 @@ async function processSchedule(){
 
 	console.log(displayRelations());
 
-	const answer = await confirm({
-		message: 'Would you like to export these results into a text document?'
+	const answer = await select({
+		message: 'Do you want to save the results in a text file?',
+		choices:[
+			{
+				name: 'Yes',
+				value: true
+			},
+			{
+				name: 'No',
+				value: false
+			}
+		]
 	})
 	if(answer){
-	
-	}
-	else{
-
+		FileSystem.writeFileSync('Assignments.txt', displayRelations(), function(err){if (err) throw err;});
+		message('Assignments.txt saved',successMsg);
+		await sleep();
 	}
 	
 	ClearTerminal();
@@ -761,9 +770,18 @@ function ClearTerminal(){
 
 async function confirmExit(){
 	ClearTerminal();
-	const answer = await confirm({
-		message: 'Are you sure you want to exit? All instance data will be lost.',
-		default: true
+	const answer = await select({
+		message: 'Do you want to exit? Unsaved changes won\'t be kept.',
+		choices:[
+			{
+				name: 'Yes',
+				value: true
+			},
+			{
+				name: 'No',
+				value: false
+			}
+		]
 	})
 	if(answer){
 		ClearTerminal();
