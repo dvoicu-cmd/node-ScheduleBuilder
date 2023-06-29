@@ -92,14 +92,19 @@ class Student {
         switch(date){
             case "Mon":
                 this._avalability[0] = new Schedule();
+                break;
             case "Tue":
                 this._avalability[1] = new Schedule();
+                break;
             case "Wed":
                 this._avalability[2] = new Schedule();
+                break;
             case "Thr":
                 this._avalability[3] = new Schedule();
+                break;
             case "Fri":
                 this._avalability[4] = new Schedule();
+                break;
             default:
                 console.log("No valid input for avalabilityAt(date) method");
         }

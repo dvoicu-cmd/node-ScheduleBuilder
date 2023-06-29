@@ -384,7 +384,6 @@ async function resetStudentDate(std){
 		]
 	})	
 	//Determine what that selected date is.
-	let selectedDate;
 	switch(answer1){
 		case 0:
 			std.resetAvalabilityAt("Mon");
@@ -556,7 +555,6 @@ async function addShift(){
 
 }
 
-
 async function removeShift(){
 	ClearTerminal();
 
@@ -625,9 +623,7 @@ async function GenerateScheduleMenu(){
  */
 async function processSchedule(){
 
-
 //TESTING STUFF TESTING STUFF TESTING STUFF:
-	
 //	STUDENT SAMPLE
     // const Baran = new Student('Baran Shajari');
     // Baran.reduceAvailability("Thr",19.5,20.5);
@@ -716,8 +712,6 @@ async function processSchedule(){
 	// sftMON2.setTime (16,17);
 	// sftMON.setDate("Mon");
 	// listShifts.add(sftMON2);
-
-
 
 	//END OF TEST SET
 
@@ -900,7 +894,7 @@ async function saveStd(){
 			throw err;
 		}
 		let jsonWrite = JSON.stringify(instanceToPlain(listStudents)); 
-		FileSystem.writeFileSync('savedStudents.json', jsonWrite, function(err){if (err) throw err;});
+		FileSystem.writeFileSync('./SavedData/savedStudents.json', jsonWrite, function(err){if (err) throw err;});
 	}
 	catch(err){
 		console.log(err);
@@ -917,7 +911,7 @@ async function saveStd(){
 function loadStds(){
 	try{
 		//Read the arrayList
-		let read = FileSystem.readFileSync('savedStudents.json','utf8', function(err,data){if (err){throw err;}});
+		let read = FileSystem.readFileSync('./SavedData/savedStudents.json','utf8', function(err,data){if (err){throw err;}});
 		let jsonRead = JSON.parse(read);
 		let loadedList = plainToInstance(ArrayList, jsonRead);
 		let loadedStudentList = new ArrayList();
@@ -956,7 +950,7 @@ async function saveSft(){
 			throw err;
 		}
 		let jsonWrite = JSON.stringify(instanceToPlain(listShifts)); 
-		FileSystem.writeFileSync('savedShifts.json', jsonWrite, function(err){if (err) throw err;});
+		FileSystem.writeFileSync('./SavedData/savedShifts.json', jsonWrite, function(err){if (err) throw err;});
 	}
 	catch(err){
 		console.log(err);
@@ -973,7 +967,7 @@ async function saveSft(){
 function loadSfts(){
 	try{
 		//Read the arrayList
-		let read = FileSystem.readFileSync('savedShifts.json','utf8', function(err,data){if (err){throw err;}});
+		let read = FileSystem.readFileSync('./SavedData/savedShifts.json','utf8', function(err,data){if (err){throw err;}});
 		let jsonRead = JSON.parse(read);
 		let loadedList = plainToInstance(ArrayList, jsonRead);
 		let loadedShiftsList = new ArrayList();
